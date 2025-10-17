@@ -57,6 +57,7 @@ public class ControladoraGui {
 
     void mostrarModificarDatos(String codigoproducto) {
         Modificardatos ventana=new Modificardatos(this,codigoproducto);
+        mostrarVentana(ventana);
     }
 
         

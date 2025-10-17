@@ -27,7 +27,7 @@ public final class FuncionesGui {
 
         int filaSelecionada = tabla.getSelectedRow();
         if (filaSelecionada != -1) {
-            //traeme la seleccionada de la columna y convertilo en int
+            //traeme la seleccionada de la columna 
             return String.valueOf(tabla.getValueAt(filaSelecionada, 0));
         }
         return null;
