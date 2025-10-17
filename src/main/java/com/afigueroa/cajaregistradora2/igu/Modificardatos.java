@@ -1,25 +1,24 @@
-
 package com.afigueroa.cajaregistradora2.igu;
 
+import Utilidades.FuncionesGui;
 import com.afigueroa.cajaregistradora2.logica.ControLogica;
 import com.afigueroa.cajaregistradora2.logica.Producto;
 
 public class Modificardatos extends javax.swing.JFrame {
 
-     private ControladoraGui controlVentana;
-     private String codigoProducto;
-     private Producto producto;
-    
-    private ControLogica controladoraLogica=new ControLogica();
-    
-    
-    public Modificardatos(ControladoraGui controlVentana,String codigoProducto) {
+    private ControladoraGui controlVentana;
+    private String codigoProducto;
+    private Producto productoAModificar;
+
+    private ControLogica controladoraLogica = new ControLogica();
+
+    public Modificardatos(ControladoraGui controlVentana, String codigoProducto) {
         initComponents();
-        this.controlVentana=controlVentana;
-        this.codigoProducto=codigoProducto;
+        this.controlVentana = controlVentana;
+        this.codigoProducto = codigoProducto;
+        cargarDatosProducto();
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -187,34 +186,32 @@ public class Modificardatos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProductoActionPerformed
-    
-        if(controladoraLogica.validarDatos(txtCodigo.getText(),
-            txtNombre.getText(),
-            txtCantidad.getText(),
-            txtDescrip.getText(),
-            txtPrecioCosto.getText(),
-            txtPrecioVenta.getText()))
-        
-        
-        /*controladoraLogica.ModificarProducto(producto,
-            txtCodigo.getText(),
-            txtNombre.getText(),
-            txtCantidad.getText(),
-            txtDescrip.getText(),
-            txtPrecioCosto.getText(),
-            txtPrecioVenta.getText()
-*/
-        );
+
         FuncionesGui.mostrarMensaje("Se Guardo Correctamente!", "info", "Guardado Exitoso");
         FuncionesGui.limpiarCampos(jPanel3);
     }//GEN-LAST:event_btnGuardarProductoActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
 
-        control.mostrarProductos();
-        this.dispose();
+        if (controladoraLogica.hayCambiosSinGuardar(productoAModificar, codigoProducto)) {
+            FuncionesGui.mostrarMensaje("Debe guardar antes de salir,", "Error", "Error");
+        } else {
+            controlVentana.mostrarProductos();
+            this.dispose();
+        }
+
 
     }//GEN-LAST:event_btnAtrasActionPerformed
+
+    private void cargarDatosProducto() {
+        productoAModificar = controladoraLogica.traerProducto(codigoProducto);
+        txtCodigo.setText(productoAModificar.getCodigo());
+        txtNombre.setText(productoAModificar.getNombre());
+        txtCantidad.setText(String.valueOf((productoAModificar.getStockActual())));
+        txtDescrip.setText(productoAModificar.getDescripcion());
+        txtPrecioCosto.setText(String.valueOf(productoAModificar.getPrecioCosto()));
+        txtPrecioVenta.setText(String.valueOf(productoAModificar.getPrecioVenta()));
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

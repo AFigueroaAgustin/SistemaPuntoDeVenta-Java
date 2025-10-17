@@ -3,15 +3,18 @@ package com.afigueroa.cajaregistradora2.logica;
 import com.afigueroa.cajaregistradora2.persistencia.ControladoraPersis;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ControLogica {
 
     ControladoraPersis controlpersi = new ControladoraPersis();
     List<DetalleVenta> carritoActual = new ArrayList<>();
-    Producto producto;
+    Producto productoAmodificar;
 
-    public Producto traerProducto(int idproducto) {
-        return controlpersi.traerProducto(idproducto);
+    public Producto traerProducto(String codigoproducto) {
+        Producto producto = controlpersi.traerProductoPorCodigo(codigoproducto);
+        return producto;
     }
 
     public void borrarProducto(String codigoProducto) {
@@ -108,9 +111,13 @@ public class ControLogica {
         carritoActual.clear();
     }
 
-    public void ModificarProducto(Producto producto,String text, String text0, String text1, String text2, String text3, String text4) {
-
-        controlpersi.modificarProducto(producto);
+    public void ModificarProducto(Producto producto) {
+        try {
+            controlpersi.modificarProducto(producto);
+        } catch (Exception e) {
+            //Registro la excepcion
+            Logger.getLogger(ControLogica.class.getName()).log(Level.SEVERE, "Error al intentar modificar el producto: " + producto.getCodigo(), e);
+        }
 
     }
 
@@ -141,18 +148,19 @@ public class ControLogica {
     }
 
     //Esto se utliza para el boton de atras
-    private boolean hayCambiosSinGuardar(Producto producto, String text, String text0, String text1, String text2, String text3, String text4) {
-        if (producto == null) {
+    public boolean hayCambiosSinGuardar(Producto productoAModificar,String codigoProducto) {
+        Producto producto=traerProducto(codigoProducto);
+        if (productoAmodificar == null) {
             return false;
         }
 
         // Comparar con los datos originales
-        return !text.equals(producto.getCodigo())
-                || !text0.equals(producto.getNombre())
-                || !text1.equals(producto.getStockActual())
-                || !text2.equals(producto.getDescripcion())
-                || !text3.equals(producto.getPrecioCosto())
-                || !text4.equals(producto.getPrecioVenta());
+        return !productoAModificar.getCodigo().equals(producto.getCodigo())
+                || !productoAModificar.getNombre().equals(producto.getNombre())
+                || productoAModificar.getStockActual()!=producto.getStockActual()
+                || !productoAModificar.getDescripcion().equals(producto.getDescripcion())
+                || productoAModificar.getPrecioCosto()!=producto.getPrecioCosto()
+                || productoAModificar.getPrecioVenta()!=producto.getPrecioVenta();
     }
 
 }
