@@ -83,24 +83,24 @@ public final class FuncionesGui {
     public static void limpiarCampos(JPanel panel) {
         for (Component comp : panel.getComponents()) {
 
-            // 🔸 Si tiene nombre "noLimpiar", lo salteamos
+            // Si tiene nombre "noLimpiar", lo salteamos
             if (comp.getName() != null && comp.getName().equals("noLimpiar")) {
                 continue;
             }
 
-            // 🔹 Limpia campos de texto
+            // Limpia campos de texto
             if (comp instanceof JTextField) {
                 ((JTextField) comp).setText("");
-            } // 🔹 Limpia áreas de texto
+            } // Limpia áreas de texto
             else if (comp instanceof JTextArea) {
                 ((JTextArea) comp).setText("");
-            } // 🔹 Limpia combo boxes
+            } // Limpia combo boxes
             else if (comp instanceof JComboBox) {
                 ((JComboBox<?>) comp).setSelectedIndex(0);
-            } // 🔹 Limpia spinners
+            } // Limpia spinners
             else if (comp instanceof JSpinner) {
                 ((JSpinner) comp).setValue(0);
-            } // 🔹 Si hay paneles dentro de paneles, los limpia recursivamente
+            } // Si hay paneles dentro de paneles, los limpia recursivamente
             else if (comp instanceof JPanel) {
                 limpiarCampos((JPanel) comp);
             }
