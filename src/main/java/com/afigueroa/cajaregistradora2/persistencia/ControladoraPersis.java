@@ -39,7 +39,11 @@ public class ControladoraPersis {
     }
 
     public void modificarProducto(Producto producto) {
-        productoJpa.edit(producto);
+        try {
+            productoJpa.edit(producto);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraPersis.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     

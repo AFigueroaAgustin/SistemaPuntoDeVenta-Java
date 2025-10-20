@@ -121,35 +121,57 @@ public class ControLogica {
 
     }
 
-    public boolean validarDatos(String text, String text0, String text1, String text2, String text3, String text4) {
-        // 1. Validar campos obligatorios
-        if (text.trim().isEmpty()) {
-            return false;
+    // Devuelve null si todos los datos estan bien
+    public String validarDatos(String txtCodigo,
+            String txtNombre,
+            String txtCantidad,
+            String txtDescrip,
+            String txtPrecioCosto,
+            String txtPrecioVenta) {
+        // Validar campos obligatorios
+        if (txtCodigo.trim().isEmpty()) {
+            return "El 'codigo' no puede estar vacio";
         }
 
-        if (text0.trim().isEmpty()) {
-            return false;
+        if (txtNombre.trim().isEmpty()) {
+            return "El ' nombre' no puede estar vacio.";
+        }
+        try {
+            int stock = Integer.parseInt(txtCantidad);
+            if (stock<=0) {
+                return "El 'Stock' tiene que ser un numero positivo.";
+            }
+        } catch (NumberFormatException e) {
+            return "El 'Stock' tiene que ser un numero.";
         }
 
-        if (text1.trim().isEmpty()) {
-            return false;
+        if (txtDescrip.trim().isEmpty()) {
+            return "La 'descripción' no puede estar vacio.";
         }
-        if (text2.trim().isEmpty()) {
-            return false;
+        System.out.println("Validando Precio Venta: '" + txtPrecioVenta + "'"); // Añade esto
+        try {
+            Float precio=Float.parseFloat(txtPrecioVenta);
+            if (precio<=0){
+                return "El 'Precio de Venta' tiene que ser un numero positivo.";
+            }
+        } catch (NumberFormatException e) {
+            return "El 'Precio de Venta' tiene que ser un numero.";
         }
-        if (text3.trim().isEmpty()) {
-            return false;
-        }
-        if (text4.trim().isEmpty()) {
-            return false;
+        try {
+            Float precio= Float.parseFloat(txtPrecioCosto);
+             if (precio<=0){
+                return "El 'Precio de costo' tiene que ser un numero positivo.";
+            }
+        } catch (NumberFormatException e) {
+            return "El 'Precio de Costo' tiene que ser un numero.";
         }
 
-        return true; // Si pasa todas las validaciones
+        return null; // Si pasa todas las validaciones
     }
 
     //Esto se utliza para el boton de atras
-    public boolean hayCambiosSinGuardar(Producto productoAModificar,String codigoProducto) {
-        Producto producto=traerProducto(codigoProducto);
+    public boolean hayCambiosSinGuardar(Producto productoAModificar, String codigoProducto) {
+        Producto producto = traerProducto(codigoProducto);
         if (productoAmodificar == null) {
             return false;
         }
@@ -157,10 +179,10 @@ public class ControLogica {
         // Comparar con los datos originales
         return !productoAModificar.getCodigo().equals(producto.getCodigo())
                 || !productoAModificar.getNombre().equals(producto.getNombre())
-                || productoAModificar.getStockActual()!=producto.getStockActual()
+                || productoAModificar.getStockActual() != producto.getStockActual()
                 || !productoAModificar.getDescripcion().equals(producto.getDescripcion())
-                || productoAModificar.getPrecioCosto()!=producto.getPrecioCosto()
-                || productoAModificar.getPrecioVenta()!=producto.getPrecioVenta();
+                || productoAModificar.getPrecioCosto() != producto.getPrecioCosto()
+                || productoAModificar.getPrecioVenta() != producto.getPrecioVenta();
     }
 
 }

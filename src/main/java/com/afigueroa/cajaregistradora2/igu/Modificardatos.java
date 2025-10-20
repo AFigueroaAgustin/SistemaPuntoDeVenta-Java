@@ -186,9 +186,23 @@ public class Modificardatos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProductoActionPerformed
+        String errorMensaje = controladoraLogica.validarDatos(
+                txtCodigo.getText(),
+                txtNombre.getText(),
+                txtCantidad.getText(),
+                txtDescrip.getText(),
+                txtPrecioCosto.getText(),
+                txtPrecioVenta.getText());
 
-        FuncionesGui.mostrarMensaje("Se Guardo Correctamente!", "info", "Guardado Exitoso");
-        FuncionesGui.limpiarCampos(jPanel3);
+        if (errorMensaje != null) {
+            FuncionesGui.mostrarMensaje(errorMensaje, "Error", "ERROR");
+        } else {
+            guardarCambios();
+            controladoraLogica.ModificarProducto(productoAModificar);
+            FuncionesGui.mostrarMensaje("Se Guardo Correctamente!", "info", "Guardado Exitoso");
+            FuncionesGui.limpiarCampos(jPanel3);
+            controlVentana.mostrarProductos();
+        }
     }//GEN-LAST:event_btnGuardarProductoActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
@@ -203,6 +217,7 @@ public class Modificardatos extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnAtrasActionPerformed
 
+// Se Muestran los datos del producto que quiere modificar
     private void cargarDatosProducto() {
         productoAModificar = controladoraLogica.traerProducto(codigoProducto);
         txtCodigo.setText(productoAModificar.getCodigo());
@@ -211,6 +226,16 @@ public class Modificardatos extends javax.swing.JFrame {
         txtDescrip.setText(productoAModificar.getDescripcion());
         txtPrecioCosto.setText(String.valueOf(productoAModificar.getPrecioCosto()));
         txtPrecioVenta.setText(String.valueOf(productoAModificar.getPrecioVenta()));
+    }
+
+    private void guardarCambios() {
+        productoAModificar.setCodigo(txtCodigo.getText());
+        productoAModificar.setNombre(txtNombre.getText());
+        productoAModificar.setStockActual(Integer.parseInt(txtCantidad.getText()));
+        productoAModificar.setDescripcion(txtDescrip.getText());
+        productoAModificar.setPrecioCosto(Float.parseFloat(txtPrecioCosto.getText()));
+        productoAModificar.setPrecioVenta(Float.parseFloat(txtPrecioVenta.getText()));
+
     }
 
 
