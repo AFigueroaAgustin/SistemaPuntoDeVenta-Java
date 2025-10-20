@@ -178,9 +178,9 @@ public class VerProductos extends javax.swing.JFrame {
             FuncionesGui.mostrarMensaje("Debe Seleccionar un Producto", "Error", "Error");
         } else {
             
-            //llamo al metodo
+            //Llamo al metodo
             controladoraLogica.borrarProducto(codigoProducto);
-            // aviso al usuario
+            // Aviso al usuario
             FuncionesGui.mostrarMensaje("Producto Eliminado Correctamente", "Info", "Eliminado Exitosamente");
             cargarTabla();
         }
