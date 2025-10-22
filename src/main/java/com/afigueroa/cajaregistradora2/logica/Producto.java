@@ -95,13 +95,6 @@ public class Producto implements Serializable {
         this.codigo = codigo;
     }
 
-    public int getCant() {
-        return cant;
-    }
-
-    public void setCant(int cant) {
-        this.cant = cant;
-    }
 
     public String getNombre() {
         return nombre;

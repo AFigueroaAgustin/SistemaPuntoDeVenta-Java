@@ -46,8 +46,8 @@ public class ControLogica {
         int cant = Integer.parseInt(text1);
         produc.setStockActual((cant >= 1) ? cant : 1);
         produc.setDescripcion(text2);
-        produc.setPrecioCosto(Integer.parseInt(text3));
-        produc.setPrecioVenta(Integer.parseInt(text4));
+        produc.setPrecioCosto(Float.parseFloat(text3));
+        produc.setPrecioVenta(Float.parseFloat(text4));
         controlpersi.cargarProducto(produc);
     }
 
