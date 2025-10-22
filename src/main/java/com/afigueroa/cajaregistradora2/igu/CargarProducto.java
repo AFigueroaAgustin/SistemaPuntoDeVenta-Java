@@ -6,12 +6,12 @@ import com.afigueroa.cajaregistradora2.logica.ControLogica;
 public class CargarProducto extends javax.swing.JFrame {
 
     private ControladoraGui control;
-    
-    private ControLogica controladoraLogica=new ControLogica();
-    
+
+    private ControLogica controladoraLogica = new ControLogica();
+
     public CargarProducto(ControladoraGui control) {
         initComponents();
-        this.control=control;
+        this.control = control;
     }
 
     @SuppressWarnings("unchecked")
@@ -181,28 +181,41 @@ public class CargarProducto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
-        
+
         control.mostrarProductos();
         this.dispose();
-        
+
     }//GEN-LAST:event_btnAtrasActionPerformed
 
     private void btnGuardarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProductoActionPerformed
-        
+        String codigo = txtCodigo.getText();
+        String nombre = txtNombre.getText();
+        String cantidadStr = txtCantidad.getText();
+        String descrip = txtDescrip.getText();
+        String precioCostoStr = txtPrecioCosto.getText();
+        String precioVentaStr = txtPrecioVenta.getText();
+        String errorMensaje = controladoraLogica.validarDatos(codigo, nombre, cantidadStr, descrip, precioCostoStr, precioVentaStr);
+
+        if (errorMensaje == null) {
+            FuncionesGui.mostrarMensaje(errorMensaje, "Error", "Error");
+        } else {
+            guardarDatos();
+            FuncionesGui.mostrarMensaje("Se Guardo Correctamente!", "info", "Guardado Exitoso");
+            FuncionesGui.limpiarCampos(jPanel3);
+        }
+
+    }//GEN-LAST:event_btnGuardarProductoActionPerformed
+
+    private void guardarDatos() {
         controladoraLogica.cargarProducto(
                 txtCodigo.getText(),
                 txtNombre.getText(),
                 txtCantidad.getText(),
                 txtDescrip.getText(),
                 txtPrecioCosto.getText(),
-                txtPrecioVenta.getText()
-                
-        );
-        FuncionesGui.mostrarMensaje("Se Guardo Correctamente!", "info", "Guardado Exitoso");
-        FuncionesGui.limpiarCampos(jPanel3);
-    }//GEN-LAST:event_btnGuardarProductoActionPerformed
+                txtPrecioVenta.getText());
+    }
 
- 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtras;
