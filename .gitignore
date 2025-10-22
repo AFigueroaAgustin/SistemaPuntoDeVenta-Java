@@ -1,0 +1,12 @@
+# Ignorar archivo de configuración de BD real
+src/main/resources/db.properties
+
+# Otras reglas comunes para Java/Maven (puedes tenerlas o no)
+target/
+*.class
+*.log
+*.jar
+*.war
+.project
+.classpath
+.settings/

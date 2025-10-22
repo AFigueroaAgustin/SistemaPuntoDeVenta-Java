@@ -16,17 +16,17 @@ import javax.persistence.criteria.Root;
 
 public class DetalleVentaJpaController implements Serializable {
 
-    public DetalleVentaJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+  private EntityManagerFactory emf = null;
+    public DetalleVentaJpaController() {
+        this.emf = PersistenceManager.getEntityManagerFactory();
     }
-    
-    public DetalleVentaJpaController(){
-        emf= Persistence.createEntityManagerFactory("TiendaPU");
-    }
-    private EntityManagerFactory emf = null;
+
 
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        if (this.emf == null) {
+           throw new IllegalStateException("EntityManagerFactory no ha sido inicializada.");
+        }
+        return emf.createEntityManager(); // Usa el emf de la instancia
     }
 
     public void create(DetalleVenta detalleVenta) {
