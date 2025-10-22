@@ -1,10 +1,12 @@
 package com.afigueroa.cajaregistradora2.logica;
 
+import Utilidades.FuncionesGui;
 import com.afigueroa.cajaregistradora2.persistencia.ControladoraPersis;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class ControLogica {
 
@@ -24,7 +26,17 @@ public class ControLogica {
     }
 
     public List<Producto> traerProductos() {
-        return controlpersi.traerProductos();
+        // Obtiene la lista completa desde la persistencia
+        List<Producto> listaCompleta = controlpersi.traerProductos(); //
+        // Filtra la lista para devolver solo aquellos donde p.isActivo() es true
+        return listaCompleta.stream()
+                .filter(Producto::isActivo) // Referencia al método isActivo() de Producto
+                .collect(Collectors.toList()); // Recolecta los resultados en una nueva lista
+    }
+
+    public List<Producto> traerTodosLosProductos() {
+        // Simplemente devuelve la lista completa de la capa de persistencia
+        return controlpersi.traerProductos(); //
     }
 
     public void cargarProducto(String text, String text0, String text1, String text2, String text3, String text4) {
@@ -48,13 +60,9 @@ public class ControLogica {
             return false;
         }
         DetalleVenta detalleExistente = buscarDetalleVentaExistente(codigoProducto);
-        System.out.println("paso el primer if");
         int cantidadYaCarrito = (detalleExistente != null) ? detalleExistente.getCant() : 0;
-        System.out.println("paso el segundo if");
         int cantidadTotal = cantidadYaCarrito + cant;
         int stockReal = produc.getStockActual();
-        System.out.println("stock" + stockReal);
-        System.out.println("paso la suma y la asignacion");
 
         // Si la cantidad total supera el stock disponible.
         if (cantidadTotal > stockReal) {
@@ -138,7 +146,7 @@ public class ControLogica {
         }
         try {
             int stock = Integer.parseInt(txtCantidad);
-            if (stock<=0) {
+            if (stock <= 0) {
                 return "El 'Stock' tiene que ser un numero positivo.";
             }
         } catch (NumberFormatException e) {
@@ -150,16 +158,16 @@ public class ControLogica {
         }
         System.out.println("Validando Precio Venta: '" + txtPrecioVenta + "'"); // Añade esto
         try {
-            Float precio=Float.parseFloat(txtPrecioVenta);
-            if (precio<=0){
+            Float precio = Float.parseFloat(txtPrecioVenta);
+            if (precio <= 0) {
                 return "El 'Precio de Venta' tiene que ser un numero positivo.";
             }
         } catch (NumberFormatException e) {
             return "El 'Precio de Venta' tiene que ser un numero.";
         }
         try {
-            Float precio= Float.parseFloat(txtPrecioCosto);
-             if (precio<=0){
+            Float precio = Float.parseFloat(txtPrecioCosto);
+            if (precio <= 0) {
                 return "El 'Precio de costo' tiene que ser un numero positivo.";
             }
         } catch (NumberFormatException e) {
@@ -185,4 +193,90 @@ public class ControLogica {
                 || productoAModificar.getPrecioVenta() != producto.getPrecioVenta();
     }
 
+    public void finalizarVenta(String metodoPago, float total) {
+        Venta nuevaVenta = new Venta();
+        nuevaVenta.setMetodoPago(metodoPago);
+        nuevaVenta.setTotalVenta(total);
+        nuevaVenta.setDetalles(carritoActual);
+
+        for (DetalleVenta detalle : carritoActual) {
+            // se le asigna cada detalle a la venta correspondiente. (se le indica que ID le corresponde)
+            detalle.setVenta(nuevaVenta);
+        }
+
+        controlpersi.guardarVenta(nuevaVenta);
+        // Actualiza el stock de los productos vendidos
+        for (DetalleVenta detalle : carritoActual) {
+            Producto productoVendido = detalle.getProducto();
+            int cantVendida = detalle.getCant();
+            int stockAntesVenta = productoVendido.getStockActual();
+            int nuevoStock = stockAntesVenta - cantVendida;
+            productoVendido.setStockActual(nuevoStock);
+            try {
+                // Guarda el producto con el stock actualizado
+                controlpersi.modificarProducto(productoVendido);
+            } catch (Exception e) {
+                Logger.getLogger(ControLogica.class.getName()).log(Level.SEVERE, "Error al actualizar stock para producto: " + productoVendido.getCodigo(), e);
+            }
+        }
+        vaciarCarrito();
+
+    }
+
+    public boolean borrarProductoDelCarrito(String codigoProducto) {
+        DetalleVenta productoAEliminar = null;
+        for (DetalleVenta detalle : carritoActual) {
+            Producto producto = detalle.getProducto();
+            if (producto.getCodigo().equals(codigoProducto)) {
+                productoAEliminar = detalle;
+                break;
+            }
+        }
+        if (productoAEliminar == null) {
+            return false;
+        } else {
+            carritoActual.remove(productoAEliminar);
+            return true;
+        }
+    }
+
+    public void desactivarProducto(String codigoProducto) {
+        // Busca el producto en la base de datos usando el código
+        Producto productoADesactivar = controlpersi.traerProductoPorCodigo(codigoProducto); //
+        // Verifica si se encontró el producto
+        if (productoADesactivar != null) {
+            // Establece el estado a inactivo
+            productoADesactivar.setActivo(false); //
+            try {
+                // Llama al método de persistencia para guardar los cambios
+                controlpersi.modificarProducto(productoADesactivar); //
+            } catch (Exception e) {
+                // Registra un error si la modificación falla
+                Logger.getLogger(ControLogica.class.getName()).log(Level.SEVERE, "Error al intentar desactivar el producto: " + codigoProducto, e);
+            }
+        } else {
+            // Opcional: Informa si no se encontró el producto
+            System.out.println("No se encontró el producto con código: " + codigoProducto + " para desactivar.");
+        }
+    }
+
+    public void activarProducto(String codigoProducto) {
+        // Busca el producto en la base de datos usando el código
+        Producto productoAActivar = controlpersi.traerProductoPorCodigo(codigoProducto); //
+        // Verifica si se encontró el producto
+        if (productoAActivar != null) {
+            // Establece el estado a activo
+            productoAActivar.setActivo(true); //
+            try {
+                // Llama al método de persistencia para guardar los cambios
+                controlpersi.modificarProducto(productoAActivar); //
+            } catch (Exception e) {
+                // Registra un error si la modificación falla
+                Logger.getLogger(ControLogica.class.getName()).log(Level.SEVERE, "Error al intentar activar el producto: " + codigoProducto, e);
+            }
+        } else {
+            // Opcional: Informa si no se encontró el producto
+            System.out.println("No se encontró el producto con código: " + codigoProducto + " para activar.");
+        }
+    }
 }

@@ -15,7 +15,6 @@ public class Producto implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String codigo;
-    private int cant;
     private String nombre;
     private String descripcion;
     private float precioCosto; // El precio al que compro   
@@ -25,13 +24,15 @@ public class Producto implements Serializable {
     @OneToMany(mappedBy = "producto",fetch = FetchType.LAZY)
     List<DetalleVenta> detalles;
     
+    
+    private boolean activo = true;
+    
     public Producto() {
     }
 
-    public Producto(int id, String codigo, int cant, String nombre, String descripcion, float precioCosto, float precioVenta, int stockActual, List<DetalleVenta> detalles) {
+    public Producto(int id, String codigo, String nombre, String descripcion, float precioCosto, float precioVenta, int stockActual, List<DetalleVenta> detalles) {
         this.id = id;
         this.codigo = codigo;
-        this.cant = cant;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precioCosto = precioCosto;
@@ -40,7 +41,16 @@ public class Producto implements Serializable {
         this.detalles = detalles;
     }
 
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
   
+    
     public int getId() {
         return id;
     }

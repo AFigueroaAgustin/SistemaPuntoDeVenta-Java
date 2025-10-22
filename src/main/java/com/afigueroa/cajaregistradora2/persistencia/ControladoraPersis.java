@@ -2,6 +2,7 @@
 package com.afigueroa.cajaregistradora2.persistencia;
 
 import com.afigueroa.cajaregistradora2.logica.Producto;
+import com.afigueroa.cajaregistradora2.logica.Venta;
 import com.afigueroa.cajaregistradora2.persistencia.exceptions.NonexistentEntityException;
 import java.util.List;
 import java.util.logging.Level;
@@ -44,6 +45,10 @@ public class ControladoraPersis {
         } catch (Exception ex) {
             Logger.getLogger(ControladoraPersis.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void guardarVenta(Venta nuevaVenta) {
+        ventaJpa.create(nuevaVenta);
     }
     
     

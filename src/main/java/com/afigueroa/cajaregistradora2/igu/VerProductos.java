@@ -4,6 +4,9 @@ import Utilidades.FuncionesGui;
 import com.afigueroa.cajaregistradora2.logica.ControLogica;
 import com.afigueroa.cajaregistradora2.logica.Producto;
 import java.util.List;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class VerProductos extends javax.swing.JFrame {
 
@@ -14,6 +17,7 @@ public class VerProductos extends javax.swing.JFrame {
     public VerProductos(ControladoraGui control) {
         initComponents();
         this.control = control;
+        configurarListenerTabla(); // Llama al método para configurar el comportamiento de la tabla
     }
 
     @SuppressWarnings("unchecked")
@@ -21,7 +25,6 @@ public class VerProductos extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        btnEliminar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -30,21 +33,13 @@ public class VerProductos extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnAtras = new javax.swing.JButton();
         btnNuevoProducto = new javax.swing.JButton();
+        chkMostrarInactivos = new javax.swing.JCheckBox();
+        btnActivarDesactivar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
-            }
-        });
-
-        btnEliminar.setFont(new java.awt.Font("Poppins Medium", 2, 14)); // NOI18N
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/afigueroa/cajaregistradora2/igu/Icons/circulo-cruzado.png"))); // NOI18N
-        btnEliminar.setText("Eliminar");
-        btnEliminar.setIconTextGap(6);
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -116,6 +111,21 @@ public class VerProductos extends javax.swing.JFrame {
             }
         });
 
+        chkMostrarInactivos.setText("Mostrar Inactivos");
+        chkMostrarInactivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkMostrarInactivosActionPerformed(evt);
+            }
+        });
+
+        btnActivarDesactivar.setText("Activar/Desactivar");
+        btnActivarDesactivar.setEnabled(false);
+        btnActivarDesactivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActivarDesactivarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -127,9 +137,10 @@ public class VerProductos extends javax.swing.JFrame {
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                             .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                            .addComponent(btnNuevoProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))
+                            .addComponent(btnNuevoProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(chkMostrarInactivos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnActivarDesactivar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -142,12 +153,14 @@ public class VerProductos extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(jLabel1)
-                .addGap(289, 289, 289)
-                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(313, 313, 313)
+                .addComponent(chkMostrarInactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnNuevoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnActivarDesactivar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
@@ -170,30 +183,94 @@ public class VerProductos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-                              
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-       String codigoProducto=FuncionesGui.getCodigoFilaSelecionada(tablaProducto);
-        if (codigoProducto==null){
-            FuncionesGui.mostrarMensaje("Debe Seleccionar un Producto", "Error", "Error");
+    private void configurarListenerTabla() {
+        // Establece el modo de selección a una sola fila
+        tablaProducto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); //
+
+        // Agrega un listener que se activa cuando cambia la fila seleccionada
+        tablaProducto.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                // getValueIsAdjusting es true mientras el usuario está interactuando (ej. arrastrando)
+                // Solo actuamos cuando la selección se ha completado y hay una fila válida seleccionada
+                if (!event.getValueIsAdjusting() && tablaProducto.getSelectedRow() != -1) { //
+                    // Llama al método para actualizar el botón según el producto seleccionado
+                    actualizarEstadoBotonActivarDesactivar();
+                } else if (tablaProducto.getSelectedRow() == -1) { //
+                    // Si no hay ninguna fila seleccionada, deshabilita el botón y pone texto genérico
+                    btnActivarDesactivar.setEnabled(false); //
+                    btnActivarDesactivar.setText("Activar/Desactivar"); //
+                }
+            }
+
+        });
+
+        // Deshabilita el botón al inicio hasta que se seleccione una fila
+        btnActivarDesactivar.setEnabled(false); //
+        btnActivarDesactivar.setText("Activar/Desactivar"); //
+    }
+
+    private void actualizarEstadoBotonActivarDesactivar() {
+        // Obtiene el índice de la fila seleccionada
+        int filaSeleccionada = tablaProducto.getSelectedRow(); //
+        // Verifica si hay una fila válida seleccionada
+        if (filaSeleccionada != -1) {
+            // Obtiene el código del producto de la primera columna (columna 0)
+            String codigoProducto = String.valueOf(tablaProducto.getValueAt(filaSeleccionada, 0)); //
+
+            // Determina qué lista de productos usar (completa o solo activos)
+            // basándose en si el checkbox "Mostrar Inactivos" está marcado
+            List<Producto> listaActual;
+            if (chkMostrarInactivos.isSelected()) {
+                listaActual = controladoraLogica.traerTodosLosProductos(); //
+            } else {
+                listaActual = controladoraLogica.traerProductos(); // Ya filtrada por activos
+            }
+
+            // Busca el objeto Producto completo en la lista correspondiente al código
+            Producto productoSeleccionado = null;
+            for (Producto p : listaActual) {
+                if (p.getCodigo().equals(codigoProducto)) { //
+                    productoSeleccionado = p;
+                    break; // Producto encontrado, salir del bucle
+                }
+            }
+
+            // Si se encontró el producto
+            if (productoSeleccionado != null) {
+                btnActivarDesactivar.setEnabled(true); // Habilita el botón
+                // Cambia el texto del botón según el estado del producto
+                if (productoSeleccionado.isActivo()) { //
+                    btnActivarDesactivar.setText("Desactivar"); //
+                } else {
+                    btnActivarDesactivar.setText("Activar"); //
+                }
+            } else {
+                // Si por alguna razón no se encontró el producto, deshabilita el botón
+                btnActivarDesactivar.setEnabled(false); //
+                btnActivarDesactivar.setText("Activar/Desactivar"); //
+            }
         } else {
-            
-            // Llamo al metodo
-            controladoraLogica.borrarProducto(codigoProducto);
-            // Aviso al usuario
-            FuncionesGui.mostrarMensaje("Producto Eliminado Correctamente", "Info", "Eliminado Exitosamente");
-            cargarTabla();
+            // Si no hay fila seleccionada, deshabilita el botón
+            btnActivarDesactivar.setEnabled(false); //
+            btnActivarDesactivar.setText("Activar/Desactivar"); //
         }
-        
-    }//GEN-LAST:event_btnEliminarActionPerformed
+    }
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (tablaProducto.getRowCount() > 0 ) {
-            String codigoproducto= FuncionesGui.getCodigoFilaSelecionada(tablaProducto);
+        if (tablaProducto.getRowCount() > 0) {
+            int filaSeleccionada = tablaProducto.getSelectedRow();
+            if (filaSeleccionada != -1) {
+                String codigoproducto = FuncionesGui.getCodigoFilaSelecionada(tablaProducto);
 
-            control.mostrarModificarDatos(codigoproducto);
+                control.mostrarModificarDatos(codigoproducto);
+
+            } else {
+                FuncionesGui.mostrarMensaje("No selecciono ningun producto", "Error", "Error");
+            }
         } else {
-            FuncionesGui.mostrarMensaje("No selecciono ningun producto", "Error", "Error");
+            FuncionesGui.mostrarMensaje("La tabla está vacía, no hay productos para editar", "Error", "Error");
         }
 
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -207,15 +284,52 @@ public class VerProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAtrasActionPerformed
 
     private void btnNuevoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoProductoActionPerformed
-       control.mostrarCargarProducto();
+        control.mostrarCargarProducto();
     }//GEN-LAST:event_btnNuevoProductoActionPerformed
+
+    private void btnActivarDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarDesactivarActionPerformed
+        // Obtiene el índice de la fila seleccionada en la tabla
+        int filaSeleccionada = tablaProducto.getSelectedRow();
+         // Verifica si realmente se seleccionó una fila (-1 significa ninguna selección)
+        if (filaSeleccionada == -1){
+            // Muestra un mensaje de error si no hay selección
+            FuncionesGui.mostrarMensaje("Debe Seleccionar un Producto", "Error", "Error");
+             // Sale del método porque no hay nada que hacer
+            return;
+        }
+
+        // Obtiene el código del producto de la columna 0 de la fila seleccionada
+        String codigoProducto = FuncionesGui.getCodigoFilaSelecionada(tablaProducto);
+        // Comprueba el texto actual del botón para decidir qué acción tomar
+        if (btnActivarDesactivar.getText().equals("Desactivar")) { 
+            // Llama a la lógica para desactivar el producto
+            controladoraLogica.desactivarProducto(codigoProducto);
+            FuncionesGui.mostrarMensaje("Producto Desactivado Correctamente", "Info", "Desactivación Exitosa");
+        } else if (btnActivarDesactivar.getText().equals("Activar")) { 
+             // Llama a la lógica para activar el producto
+            controladoraLogica.activarProducto(codigoProducto);
+            FuncionesGui.mostrarMensaje("Producto Activado Correctamente", "Info", "Activación Exitosa");
+        }
+
+        // Recarga la tabla para que se actualice la vista
+        cargarTabla();
+        // Resetea el botón a su estado inicial (deshabilitado, texto genérico)
+        btnActivarDesactivar.setEnabled(false);
+        btnActivarDesactivar.setText("Activar/Desactivar"); 
+        
+    }//GEN-LAST:event_btnActivarDesactivarActionPerformed
+
+    private void chkMostrarInactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkMostrarInactivosActionPerformed
+        cargarTabla(); // Recarga la tabla con el filtro correspondiente
+    }//GEN-LAST:event_chkMostrarInactivosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActivarDesactivar;
     private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNuevoProducto;
+    private javax.swing.JCheckBox chkMostrarInactivos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
@@ -225,11 +339,29 @@ public class VerProductos extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void cargarTabla() {
-        List<Producto> lista=controladoraLogica.traerProductos();
-        FuncionesGui.cargarTablaProductos(tablaProducto, lista);
-        
+        List<Producto> lista;
+        boolean mostrarInactivos = chkMostrarInactivos.isSelected(); // Guarda el estado del checkbox
+        if (mostrarInactivos) {
+        // Si el checkbox está marcado, trae TODOS los productos
+        lista = controladoraLogica.traerTodosLosProductos(); //
+        // Cuenta cuántos productos inactivos hay en la lista completa
+        long cantidadInactivos = lista.stream()
+                                      .filter(p -> !p.isActivo()) // Filtra los que NO están activos
+                                      .count(); // Cuenta cuántos son
+
+        if (cantidadInactivos == 0) {
+            FuncionesGui.mostrarMensaje("No hay productos inactivos para mostrar.", "Info", "Información"); //
+        }
+    } else {
+        // Si no está marcado, trae solo los ACTIVOS 
+        lista = controladoraLogica.traerProductos();
     }
 
-
+    // Llama a la utilidad para poblar la JTable con la lista obtenida
+    FuncionesGui.cargarTablaProductos(tablaProducto, lista); 
+    // Despues de recargar, resetea el estado del botón Activar/Desactivar
+    btnActivarDesactivar.setEnabled(false); 
+    btnActivarDesactivar.setText("Activar/Desactivar"); 
+    }
 
 }
