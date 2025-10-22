@@ -120,6 +120,11 @@ public class Compra extends javax.swing.JFrame {
 
         bntEliminarProducto.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
         bntEliminarProducto.setText("Eliminar Producto");
+        bntEliminarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntEliminarProductoActionPerformed(evt);
+            }
+        });
 
         bntFinalizarCompra.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
         bntFinalizarCompra.setText("Finalizar Compra");
@@ -255,14 +260,11 @@ public class Compra extends javax.swing.JFrame {
             String metodoPago = FuncionesGui.mostrarMensajeInput("Total a pagar: $" + total + "\nIngrese Método de Pago:", "Finalizar Venta");
 
             if (metodoPago != null && !metodoPago.trim().isEmpty()) {
-                // Aquí, en el futuro, llamarías a controladoraLogica.finalizarVenta(metodoPago, total);
+                controladoraLogica.finalizarVenta(metodoPago, total);
 
                 FuncionesGui.mostrarMensaje("Venta finalizada con éxito. Total: $" + total + " (" + metodoPago + ")", "Éxito", "Información");
-
-                // Vaciar el carrito para la próxima venta
-                controladoraLogica.vaciarCarrito();
-                cargarTablaCarrito(); // Refresca la tabla del carrito (ahora vacía)
-                // cargartablaProducto(); // Si quieres ver el stock actualizado, lo harías aquí si hubieras persistido
+                cargarTablaCarrito(); // Refresca la tabla del carrito 
+                cargartablaProducto(); //ver el stock actualizado
             } else {
                 FuncionesGui.mostrarMensaje("Operación de venta cancelada.", "Advertencia", "Alerta");
             }
@@ -270,6 +272,20 @@ public class Compra extends javax.swing.JFrame {
             FuncionesGui.mostrarMensaje("El carrito está vacío. Agregue productos para finalizar la venta.", "Advertencia", "Alerta");
         }
     }//GEN-LAST:event_bntFinalizarCompraActionPerformed
+
+    private void bntEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntEliminarProductoActionPerformed
+        String codigoProducto=FuncionesGui.getCodigoFilaSelecionada(tablaProductoSelec);
+        if (codigoProducto==null){
+            FuncionesGui.mostrarMensaje("Debe Seleccionar un Producto", "Error", "Error");
+        } else {
+            
+            // Llamo al metodo
+            controladoraLogica.borrarProductoDelCarrito(codigoProducto);
+            // Aviso al usuario
+            FuncionesGui.mostrarMensaje("Producto Eliminado Correctamente", "Info", "Eliminado Exitosamente");
+            cargarTablaCarrito();
+        }
+    }//GEN-LAST:event_bntEliminarProductoActionPerformed
 
     private void cargartablaProducto() {
         List<Producto> inventario = controladoraLogica.traerProductos();
