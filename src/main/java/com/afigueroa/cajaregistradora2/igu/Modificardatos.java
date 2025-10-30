@@ -3,6 +3,7 @@ package com.afigueroa.cajaregistradora2.igu;
 import Utilidades.FuncionesGui;
 import com.afigueroa.cajaregistradora2.logica.ControLogica;
 import com.afigueroa.cajaregistradora2.logica.Producto;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 public class Modificardatos extends javax.swing.JFrame {
 
@@ -14,6 +15,10 @@ public class Modificardatos extends javax.swing.JFrame {
 
     public Modificardatos(ControladoraGui controlVentana, String codigoProducto) {
         initComponents();
+         String rutaIcono = "/com/afigueroa/cajaregistradora2/igu/Icons/save.svg";
+         String rutaIcono2 = "/com/afigueroa/cajaregistradora2/igu/Icons/arrow_back_.svg";
+         btnGuardarProducto.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono)));
+         btnAtras.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono2)));
         this.controlVentana = controlVentana;
         this.codigoProducto = codigoProducto;
         cargarDatosProducto();
@@ -78,28 +83,27 @@ public class Modificardatos extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(205, 205, 205)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(125, 125, 125)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-                            .addComponent(txtNombre)
-                            .addComponent(txtCantidad)
-                            .addComponent(txtDescrip)
-                            .addComponent(txtPrecioCosto)
-                            .addComponent(txtPrecioVenta)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(443, 443, 443)
-                        .addComponent(btnGuardarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(342, Short.MAX_VALUE))
+                .addGap(205, 205, 205)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(125, 125, 125)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                    .addComponent(txtNombre)
+                    .addComponent(txtCantidad)
+                    .addComponent(txtDescrip)
+                    .addComponent(txtPrecioCosto)
+                    .addComponent(txtPrecioVenta))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnGuardarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(418, 418, 418))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,10 +132,10 @@ public class Modificardatos extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addGap(42, 42, 42)
-                        .addComponent(btnGuardarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(72, Short.MAX_VALUE))
+                            .addComponent(jLabel6))))
+                .addGap(28, 28, 28)
+                .addComponent(btnGuardarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/afigueroa/cajaregistradora2/igu/Icons/flecha-hacia-atras.png"))); // NOI18N

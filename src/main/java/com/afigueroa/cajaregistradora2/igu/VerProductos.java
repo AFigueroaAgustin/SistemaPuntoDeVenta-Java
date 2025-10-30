@@ -3,6 +3,7 @@ package com.afigueroa.cajaregistradora2.igu;
 import Utilidades.FuncionesGui;
 import com.afigueroa.cajaregistradora2.logica.ControLogica;
 import com.afigueroa.cajaregistradora2.logica.Producto;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.util.List;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -16,6 +17,12 @@ public class VerProductos extends javax.swing.JFrame {
 
     public VerProductos(ControladoraGui control) {
         initComponents();
+        String rutaIcono = "/com/afigueroa/cajaregistradora2/igu/Icons/edit.svg";
+        String rutaIcono2 = "/com/afigueroa/cajaregistradora2/igu/Icons/add.svg";
+        String rutaIcono3 = "/com/afigueroa/cajaregistradora2/igu/Icons/arrow_back_.svg";
+        btnEditar.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono)));
+        btnNuevoProducto.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono2)));
+        btnAtras.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono3)));
         this.control = control;
         configurarListenerTabla(); // Llama al método para configurar el comportamiento de la tabla
     }

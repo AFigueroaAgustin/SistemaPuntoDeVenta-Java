@@ -1,13 +1,18 @@
 
 package com.afigueroa.cajaregistradora2.igu;
-
-
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 public class Principal extends javax.swing.JFrame {
 
     private ControladoraGui control;
     
     public Principal(ControladoraGui control) {
         initComponents();
+        String rutaIcono = "/com/afigueroa/cajaregistradora2/igu/Icons/shopping-cart.svg";
+        String rutaIcono2 = "/com/afigueroa/cajaregistradora2/igu/Icons/search.svg";
+        String rutaIcono3 = "/com/afigueroa/cajaregistradora2/igu/Icons/log-out.svg";
+        btnVenta.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono)));
+        bntCatalogo.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono2)));
+        btnCerrar.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono3)));
         this.control=control;
     }
     
@@ -32,7 +37,6 @@ public class Principal extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         btnVenta.setFont(new java.awt.Font("Poppins Medium", 0, 18)); // NOI18N
-        btnVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/afigueroa/cajaregistradora2/igu/Icons/carrito-de-compras.png"))); // NOI18N
         btnVenta.setText("Venta");
         btnVenta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnVenta.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -43,7 +47,6 @@ public class Principal extends javax.swing.JFrame {
         });
 
         bntCatalogo.setFont(new java.awt.Font("Poppins Medium", 0, 18)); // NOI18N
-        bntCatalogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/afigueroa/cajaregistradora2/igu/Icons/busqueda.png"))); // NOI18N
         bntCatalogo.setText("Catalogo/Productos");
         bntCatalogo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         bntCatalogo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -54,7 +57,6 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btnCerrar.setFont(new java.awt.Font("Poppins Medium", 0, 18)); // NOI18N
-        btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/afigueroa/cajaregistradora2/igu/Icons/cierre-de-sesion-de-usuario.png"))); // NOI18N
         btnCerrar.setText("Cerrar  ");
         btnCerrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnCerrar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);

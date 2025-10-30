@@ -4,6 +4,7 @@ import Utilidades.FuncionesGui;
 import com.afigueroa.cajaregistradora2.logica.ControLogica;
 import com.afigueroa.cajaregistradora2.logica.DetalleVenta;
 import com.afigueroa.cajaregistradora2.logica.Producto;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -17,6 +18,8 @@ public class Compra extends javax.swing.JFrame {
 
     public Compra(ControladoraGui control) {
         initComponents();
+        String rutaIcono = "/com/afigueroa/cajaregistradora2/igu/Icons/arrow_back_.svg";
+        btnAtras.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono)));
         this.control = control;
     }
 
