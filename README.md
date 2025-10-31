@@ -60,9 +60,7 @@ Tienes dos formas de ejecutar la aplicación:
 
 * Implementar un sistema de **Login** para seguridad.
 * Añadir un módulo de **Reportes** (historial de ventas, totales diarios, etc.).
-* Mejorar el **manejo de errores** para notificar a la GUI sobre fallos en la persistencia.
-* Corregir **bugs menores** (como la carga de íconos con rutas absolutas).
 * Añadir **pruebas unitarias**.
-* Mejorar la **interfaz de usuario** (diseño, usabilidad).
+
 
 ---
