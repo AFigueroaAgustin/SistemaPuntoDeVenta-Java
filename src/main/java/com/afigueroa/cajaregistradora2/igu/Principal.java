@@ -1,5 +1,6 @@
 
 package com.afigueroa.cajaregistradora2.igu;
+import Utilidades.FuncionesGui;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 public class Principal extends javax.swing.JFrame {
 
@@ -7,12 +8,9 @@ public class Principal extends javax.swing.JFrame {
     
     public Principal(ControladoraGui control) {
         initComponents();
-        String rutaIcono = "/com/afigueroa/cajaregistradora2/igu/Icons/shopping-cart.svg";
-        String rutaIcono2 = "/com/afigueroa/cajaregistradora2/igu/Icons/search.svg";
-        String rutaIcono3 = "/com/afigueroa/cajaregistradora2/igu/Icons/log-out.svg";
-        btnVenta.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono)));
-        bntCatalogo.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono2)));
-        btnCerrar.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono3)));
+        FuncionesGui.estilizarBotonCerrar(btnCerrar);
+        FuncionesGui.estilizarBotonCatalogo(btnCatalogo);
+        FuncionesGui.estilizarBotonVenta(btnVenta);
         this.control=control;
     }
     
@@ -24,7 +22,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnVenta = new javax.swing.JButton();
-        bntCatalogo = new javax.swing.JButton();
+        btnCatalogo = new javax.swing.JButton();
         btnCerrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -34,8 +32,8 @@ public class Principal extends javax.swing.JFrame {
         jLabel1.setText("TIENDA LOS FIGUEROA");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        btnVenta.setBackground(null);
         btnVenta.setFont(new java.awt.Font("Poppins Medium", 0, 18)); // NOI18N
         btnVenta.setText("Venta");
         btnVenta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -46,13 +44,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        bntCatalogo.setFont(new java.awt.Font("Poppins Medium", 0, 18)); // NOI18N
-        bntCatalogo.setText("Catalogo/Productos");
-        bntCatalogo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        bntCatalogo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        bntCatalogo.addActionListener(new java.awt.event.ActionListener() {
+        btnCatalogo.setFont(new java.awt.Font("Poppins Medium", 0, 18)); // NOI18N
+        btnCatalogo.setText("Catalogo/Productos");
+        btnCatalogo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCatalogo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnCatalogo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntCatalogoActionPerformed(evt);
+                btnCatalogoActionPerformed(evt);
             }
         });
 
@@ -74,7 +72,7 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49)
-                .addComponent(bntCatalogo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCatalogo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -84,7 +82,7 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(127, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bntCatalogo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCatalogo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(123, 123, 123))
@@ -110,7 +108,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 91, Short.MAX_VALUE))
+                .addGap(0, 95, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -136,10 +134,10 @@ public class Principal extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCerrarActionPerformed
 
-    private void bntCatalogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntCatalogoActionPerformed
+    private void btnCatalogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatalogoActionPerformed
         control.mostrarProductos();
         this.dispose();
-    }//GEN-LAST:event_bntCatalogoActionPerformed
+    }//GEN-LAST:event_btnCatalogoActionPerformed
 
 
     
@@ -149,7 +147,7 @@ public class Principal extends javax.swing.JFrame {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bntCatalogo;
+    private javax.swing.JButton btnCatalogo;
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnVenta;
     private javax.swing.JLabel jLabel1;

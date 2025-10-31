@@ -17,12 +17,9 @@ public class VerProductos extends javax.swing.JFrame {
 
     public VerProductos(ControladoraGui control) {
         initComponents();
-        String rutaIcono = "/com/afigueroa/cajaregistradora2/igu/Icons/edit.svg";
-        String rutaIcono2 = "/com/afigueroa/cajaregistradora2/igu/Icons/add.svg";
-        String rutaIcono3 = "/com/afigueroa/cajaregistradora2/igu/Icons/arrow_back_.svg";
-        btnEditar.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono)));
-        btnNuevoProducto.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono2)));
-        btnAtras.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono3)));
+        FuncionesGui.estilizarBotonEditar(btnEditar);
+        FuncionesGui.estilizarBotonNuevo(btnNuevoProducto);
+        FuncionesGui.estilizarBotonAtras(btnAtras);
         this.control = control;
         configurarListenerTabla(); // Llama al método para configurar el comportamiento de la tabla
     }
@@ -297,23 +294,23 @@ public class VerProductos extends javax.swing.JFrame {
     private void btnActivarDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarDesactivarActionPerformed
         // Obtiene el índice de la fila seleccionada en la tabla
         int filaSeleccionada = tablaProducto.getSelectedRow();
-         // Verifica si realmente se seleccionó una fila (-1 significa ninguna selección)
-        if (filaSeleccionada == -1){
+        // Verifica si realmente se seleccionó una fila (-1 significa ninguna selección)
+        if (filaSeleccionada == -1) {
             // Muestra un mensaje de error si no hay selección
             FuncionesGui.mostrarMensaje("Debe Seleccionar un Producto", "Error", "Error");
-             // Sale del método porque no hay nada que hacer
+            // Sale del método porque no hay nada que hacer
             return;
         }
 
         // Obtiene el código del producto de la columna 0 de la fila seleccionada
         String codigoProducto = FuncionesGui.getCodigoFilaSelecionada(tablaProducto);
         // Comprueba el texto actual del botón para decidir qué acción tomar
-        if (btnActivarDesactivar.getText().equals("Desactivar")) { 
+        if (btnActivarDesactivar.getText().equals("Desactivar")) {
             // Llama a la lógica para desactivar el producto
             controladoraLogica.desactivarProducto(codigoProducto);
             FuncionesGui.mostrarMensaje("Producto Desactivado Correctamente", "Info", "Desactivación Exitosa");
-        } else if (btnActivarDesactivar.getText().equals("Activar")) { 
-             // Llama a la lógica para activar el producto
+        } else if (btnActivarDesactivar.getText().equals("Activar")) {
+            // Llama a la lógica para activar el producto
             controladoraLogica.activarProducto(codigoProducto);
             FuncionesGui.mostrarMensaje("Producto Activado Correctamente", "Info", "Activación Exitosa");
         }
@@ -322,8 +319,8 @@ public class VerProductos extends javax.swing.JFrame {
         cargarTabla();
         // Resetea el botón a su estado inicial (deshabilitado, texto genérico)
         btnActivarDesactivar.setEnabled(false);
-        btnActivarDesactivar.setText("Activar/Desactivar"); 
-        
+        btnActivarDesactivar.setText("Activar/Desactivar");
+
     }//GEN-LAST:event_btnActivarDesactivarActionPerformed
 
     private void chkMostrarInactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkMostrarInactivosActionPerformed
@@ -349,26 +346,26 @@ public class VerProductos extends javax.swing.JFrame {
         List<Producto> lista;
         boolean mostrarInactivos = chkMostrarInactivos.isSelected(); // Guarda el estado del checkbox
         if (mostrarInactivos) {
-        // Si el checkbox está marcado, trae TODOS los productos
-        lista = controladoraLogica.traerTodosLosProductos(); //
-        // Cuenta cuántos productos inactivos hay en la lista completa
-        long cantidadInactivos = lista.stream()
-                                      .filter(p -> !p.isActivo()) // Filtra los que NO están activos
-                                      .count(); // Cuenta cuántos son
+            // Si el checkbox está marcado, trae TODOS los productos
+            lista = controladoraLogica.traerTodosLosProductos(); //
+            // Cuenta cuántos productos inactivos hay en la lista completa
+            long cantidadInactivos = lista.stream()
+                    .filter(p -> !p.isActivo()) // Filtra los que NO están activos
+                    .count(); // Cuenta cuántos son
 
-        if (cantidadInactivos == 0) {
-            FuncionesGui.mostrarMensaje("No hay productos inactivos para mostrar.", "Info", "Información"); //
+            if (cantidadInactivos == 0) {
+                FuncionesGui.mostrarMensaje("No hay productos inactivos para mostrar.", "Info", "Información"); //
+            }
+        } else {
+            // Si no está marcado, trae solo los ACTIVOS 
+            lista = controladoraLogica.traerProductos();
         }
-    } else {
-        // Si no está marcado, trae solo los ACTIVOS 
-        lista = controladoraLogica.traerProductos();
-    }
 
-    // Llama a la utilidad para poblar la JTable con la lista obtenida
-    FuncionesGui.cargarTablaProductos(tablaProducto, lista); 
-    // Despues de recargar, resetea el estado del botón Activar/Desactivar
-    btnActivarDesactivar.setEnabled(false); 
-    btnActivarDesactivar.setText("Activar/Desactivar"); 
+        // Llama a la utilidad para poblar la JTable con la lista obtenida
+        FuncionesGui.cargarTablaProductos(tablaProducto, lista);
+        // Despues de recargar, resetea el estado del botón Activar/Desactivar
+        btnActivarDesactivar.setEnabled(false);
+        btnActivarDesactivar.setText("Activar/Desactivar");
     }
 
 }

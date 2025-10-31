@@ -18,8 +18,7 @@ public class Compra extends javax.swing.JFrame {
 
     public Compra(ControladoraGui control) {
         initComponents();
-        String rutaIcono = "/com/afigueroa/cajaregistradora2/igu/Icons/arrow_back_.svg";
-        btnAtras.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono)));
+        FuncionesGui.estilizarBotonAtras(btnAtras);
         this.control = control;
     }
 

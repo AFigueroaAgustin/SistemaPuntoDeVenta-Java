@@ -15,10 +15,8 @@ public class Modificardatos extends javax.swing.JFrame {
 
     public Modificardatos(ControladoraGui controlVentana, String codigoProducto) {
         initComponents();
-         String rutaIcono = "/com/afigueroa/cajaregistradora2/igu/Icons/save.svg";
-         String rutaIcono2 = "/com/afigueroa/cajaregistradora2/igu/Icons/arrow_back_.svg";
-         btnGuardarProducto.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono)));
-         btnAtras.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono2)));
+        FuncionesGui.estilizarBotonGuardar(btnGuardarProducto);
+        FuncionesGui.estilizarBotonAtras(btnAtras);
         this.controlVentana = controlVentana;
         this.codigoProducto = codigoProducto;
         cargarDatosProducto();

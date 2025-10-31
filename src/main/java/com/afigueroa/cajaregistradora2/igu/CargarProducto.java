@@ -12,10 +12,8 @@ public class CargarProducto extends javax.swing.JFrame {
 
     public CargarProducto(ControladoraGui control) {
         initComponents();
-        String rutaIcono = "/com/afigueroa/cajaregistradora2/igu/Icons/arrow_back_.svg";
-        String rutaIcono2 = "/com/afigueroa/cajaregistradora2/igu/Icons/save.svg";
-        btnAtras.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono)));
-         btnGuardarProducto.setIcon(new FlatSVGIcon(getClass().getResource(rutaIcono2)));
+        FuncionesGui.estilizarBotonAtras(btnAtras);
+        FuncionesGui.estilizarBotonGuardar(btnGuardarProducto);
         this.control = control;
     }
 
@@ -42,6 +40,8 @@ public class CargarProducto extends javax.swing.JFrame {
         btnAtras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
         jLabel7.setFont(new java.awt.Font("Poppins Black", 1, 36)); // NOI18N
         jLabel7.setText("CARGAR NUEVO PRODUCTO");
@@ -154,7 +154,7 @@ public class CargarProducto extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(260, Short.MAX_VALUE))
+                .addContainerGap(230, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,7 +165,7 @@ public class CargarProducto extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addGap(44, 44, 44)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

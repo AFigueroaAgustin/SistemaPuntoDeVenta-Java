@@ -2,8 +2,10 @@ package Utilidades;
 
 import com.afigueroa.cajaregistradora2.logica.DetalleVenta;
 import com.afigueroa.cajaregistradora2.logica.Producto;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.Component;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -72,7 +74,7 @@ public final class FuncionesGui {
             optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
         } else if (tipoMensaje.equals("Error")) {
             optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
-        }else if(tipoMensaje.equals("Advertencia")){
+        } else if (tipoMensaje.equals("Advertencia")) {
             optionPane.setMessageType(JOptionPane.WARNING_MESSAGE);
         }
         JDialog dialog = optionPane.createDialog(titulo);
@@ -107,16 +109,14 @@ public final class FuncionesGui {
         }
     }
 
-  
-
     public static String mostrarMensajeInput(String mensaje, String titulo) {
 
         return JOptionPane.showInputDialog(null, mensaje, titulo, JOptionPane.QUESTION_MESSAGE);
 
     }
-    
-    public static void cargarTablaCarrito(JTable tabla,List<DetalleVenta>listaDetalle){
-        
+
+    public static void cargarTablaCarrito(JTable tabla, List<DetalleVenta> listaDetalle) {
+
         DefaultTableModel modelo = new DefaultTableModel() {
 
             @Override
@@ -125,24 +125,59 @@ public final class FuncionesGui {
             }
 
         };
-        String[] columnas = {"Codigo", "Nombre", "Cantidad", "Precio Unit.","SubTotal"};
+        String[] columnas = {"Codigo", "Nombre", "Cantidad", "Precio Unit.", "SubTotal"};
         modelo.setColumnIdentifiers(columnas);
 
         if (listaDetalle != null) {
             for (DetalleVenta detalle : listaDetalle) {
-                String codigo=detalle.getProducto().getCodigo();
-                String nombre=detalle.getProducto().getNombre();
-                int cantidad=detalle.getCant();
-                float precioUnit=detalle.getPrecioUnitarioVenta();
-                float subTotal=cantidad*precioUnit;
-                Object[] fila = {codigo,nombre,cantidad,precioUnit,subTotal};
+                String codigo = detalle.getProducto().getCodigo();
+                String nombre = detalle.getProducto().getNombre();
+                int cantidad = detalle.getCant();
+                float precioUnit = detalle.getPrecioUnitarioVenta();
+                float subTotal = cantidad * precioUnit;
+                Object[] fila = {codigo, nombre, cantidad, precioUnit, subTotal};
                 modelo.addRow(fila);
             }
         }
 
         tabla.setModel(modelo);
-        
+
     }
-    
-    
+
+    public static void estilizarBotonAtras(JButton botonAtras) {
+        // Usamos  porque el método es estático
+        botonAtras.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/arrow_back_.svg")));
+
+        // "roundRect" le da bordes completamente redondeados.
+        botonAtras.putClientProperty("JButton.buttonType", "roundRect");
+        botonAtras.setText(null);
+    }
+
+    public static void estilizarBotonGuardar(JButton botonGuardar) {
+        // Carga el ícono SVG de guardar
+        botonGuardar.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/save.svg")));
+        botonGuardar.putClientProperty("JButton.buttonType", "roundRect");
+    }
+
+    public static void estilizarBotonEditar(JButton botonEditar) {
+        botonEditar.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/edit.svg")));
+        botonEditar.putClientProperty("JButton.buttonType", "roundRect");
+    }
+
+    public static void estilizarBotonNuevo(JButton botonNuevo) {
+        botonNuevo.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/add.svg")));
+        botonNuevo.putClientProperty("JButton.buttonType", "roundRect");
+    }
+
+    public static void estilizarBotonVenta(JButton botonVenta) {
+        botonVenta.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/shopping-cart.svg")));
+    }
+
+    public static void estilizarBotonCatalogo(JButton botonCatalogo) {
+        botonCatalogo.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/search.svg")));
+    }
+
+    public static void estilizarBotonCerrar(JButton botonCerrar) {
+        botonCerrar.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/log-out.svg")));
+    }
 }
