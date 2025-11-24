@@ -42,6 +42,16 @@ Este proyecto es una aplicación de escritorio desarrollada en Java Swing que si
 
 ## Ejecución ▶️
 
+Tienes dos formas de ejecutar la aplicación:
+
+### Opción 1: Instalador de Windows (Recomendado)
+
+1.  Ve a la sección de [**Releases**](https://github.com/AFigueroaAgustin/SistemaPuntoDeVenta-Java/releases) del repositorio.
+2.  Descarga el archivo `.exe` de la última versión (ej. `Tienda.Los.Figueroa-1.0.1.exe`).
+3.  Ejecuta el instalador. Esto instalará la aplicación en tu computadora (incluyendo el Java necesario) y creará accesos directos.
+
+### Opción 2: Desde el código fuente (Para desarrolladores)
+
 1.  Abre el proyecto en tu IDE preferido (NetBeans, IntelliJ IDEA, Eclipse).
 2.  Asegúrate de que las dependencias de Maven se hayan descargado correctamente.
 3.  Ejecuta la clase principal: `com.afigueroa.cajaregistradora2.Cajaregistradora2`.
@@ -50,9 +60,7 @@ Este proyecto es una aplicación de escritorio desarrollada en Java Swing que si
 
 * Implementar un sistema de **Login** para seguridad.
 * Añadir un módulo de **Reportes** (historial de ventas, totales diarios, etc.).
-* Mejorar el **manejo de errores** para notificar a la GUI sobre fallos en la persistencia.
-* Corregir **bugs menores** (como la carga de íconos con rutas absolutas).
 * Añadir **pruebas unitarias**.
-* Mejorar la **interfaz de usuario** (diseño, usabilidad).
+
 
 ---
