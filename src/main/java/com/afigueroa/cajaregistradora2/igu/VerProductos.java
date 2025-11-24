@@ -3,11 +3,12 @@ package com.afigueroa.cajaregistradora2.igu;
 import Utilidades.FuncionesGui;
 import com.afigueroa.cajaregistradora2.logica.ControLogica;
 import com.afigueroa.cajaregistradora2.logica.Producto;
-import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.util.List;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class VerProductos extends javax.swing.JFrame {
 
@@ -20,6 +21,8 @@ public class VerProductos extends javax.swing.JFrame {
         FuncionesGui.estilizarBotonEditar(btnEditar);
         FuncionesGui.estilizarBotonNuevo(btnNuevoProducto);
         FuncionesGui.estilizarBotonAtras(btnAtras);
+        FuncionesGui.estilizarBotonReporteVentas(btnReporteVenta);
+        FuncionesGui.estilizarBotonActivarDesactivar(btnActivarDesactivar);
         this.control = control;
         configurarListenerTabla(); // Llama al método para configurar el comportamiento de la tabla
     }
@@ -39,6 +42,7 @@ public class VerProductos extends javax.swing.JFrame {
         btnNuevoProducto = new javax.swing.JButton();
         chkMostrarInactivos = new javax.swing.JCheckBox();
         btnActivarDesactivar = new javax.swing.JButton();
+        btnReporteVenta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -130,6 +134,15 @@ public class VerProductos extends javax.swing.JFrame {
             }
         });
 
+        btnReporteVenta.setFont(new java.awt.Font("Poppins Medium", 2, 14)); // NOI18N
+        btnReporteVenta.setText("Reporte Ventas");
+        btnReporteVenta.setIconTextGap(6);
+        btnReporteVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteVentaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -144,7 +157,8 @@ public class VerProductos extends javax.swing.JFrame {
                             .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                             .addComponent(btnNuevoProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                             .addComponent(chkMostrarInactivos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnActivarDesactivar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(btnActivarDesactivar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnReporteVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -165,6 +179,8 @@ public class VerProductos extends javax.swing.JFrame {
                 .addComponent(btnNuevoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnActivarDesactivar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnReporteVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
@@ -327,12 +343,26 @@ public class VerProductos extends javax.swing.JFrame {
         cargarTabla(); // Recarga la tabla con el filtro correspondiente
     }//GEN-LAST:event_chkMostrarInactivosActionPerformed
 
+    private void btnReporteVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteVentaActionPerformed
+        // PEDIR EL REPORTE A LA LÓGICA
+        JasperPrint reporte = controladoraLogica.generarReporteVentas();
+
+        if (reporte != null) {
+            JasperViewer visor = new JasperViewer(reporte, false); // "false" No cerrar la app al salir
+            visor.setTitle("Reporte General de Ventas");
+            visor.setVisible(true);
+        } else {
+            Utilidades.FuncionesGui.mostrarMensaje("No se pudo generar el reporte. Revise la conexión o el archivo.", "Error", "Error al Generar");
+        }
+    }//GEN-LAST:event_btnReporteVentaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActivarDesactivar;
     private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnNuevoProducto;
+    private javax.swing.JButton btnReporteVenta;
     private javax.swing.JCheckBox chkMostrarInactivos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;

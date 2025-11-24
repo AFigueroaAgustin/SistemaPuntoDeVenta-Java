@@ -62,6 +62,21 @@
             <artifactId>flatlaf-extras</artifactId>
             <version>3.6</version>
         </dependency>
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>7.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports-pdf</artifactId>
+            <version>7.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.2.3</version> 
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -75,7 +90,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version> <executions>
+                <version>3.2.4</version> 
+                <executions>
                     <execution>
                         <phase>package</phase>
                         <goals>
@@ -84,7 +100,8 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.afigueroa.cajaregistradora2.Cajaregistradora2</mainClass> </transformer>
+                                    <mainClass>com.afigueroa.cajaregistradora2.Cajaregistradora2</mainClass> 
+                                </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>META-INF/services/javax.persistence.spi.PersistenceProvider</resource>
                                 </transformer>
@@ -105,4 +122,4 @@
             </plugin>
         </plugins>
     </build>
-    </project>
+</project>

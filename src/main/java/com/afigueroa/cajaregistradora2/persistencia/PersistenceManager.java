@@ -9,12 +9,14 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class PersistenceManager {
+
     // La única instancia de EntityManagerFactory 
     private static EntityManagerFactory emf = null;
     private static final String PERSISTENCE_UNIT_NAME = "TiendaPU";
-    
-    private PersistenceManager() {}
-    
+
+    private PersistenceManager() {
+    }
+
     public static synchronized EntityManagerFactory getEntityManagerFactory() {
         if (emf == null) {
             try {
@@ -52,8 +54,31 @@ public class PersistenceManager {
         return emf;
     }
 
+   public static java.sql.Connection getConnection() {
+        java.sql.Connection con = null;
+        try {
+            java.util.Properties props = new java.util.Properties();
+            java.io.InputStream input = PersistenceManager.class.getClassLoader().getResourceAsStream("db.properties");
+            
+            if (input == null) return null;
+            props.load(input);
+            input.close();
 
-      //Cierra el EntityManagerFactory. Debe llamarse al cerrar la aplicación.
+            String url = props.getProperty("javax.persistence.jdbc.url");
+            String user = props.getProperty("javax.persistence.jdbc.user");
+            String pass = props.getProperty("javax.persistence.jdbc.password");
+            
+            // Importante: Cargar el driver manualmente para JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            
+            con = java.sql.DriverManager.getConnection(url, user, pass);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return con;
+    }
+
+    //Cierra el EntityManagerFactory. Debe llamarse al cerrar la aplicación.
     public static synchronized void closeEntityManagerFactory() {
         if (emf != null && emf.isOpen()) {
             emf.close();

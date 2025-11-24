@@ -52,6 +52,7 @@
                               <Component id="btnNuevoProducto" alignment="0" pref="150" max="32767" attributes="0"/>
                               <Component id="chkMostrarInactivos" max="32767" attributes="0"/>
                               <Component id="btnActivarDesactivar" max="32767" attributes="0"/>
+                              <Component id="btnReporteVenta" pref="150" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -78,6 +79,8 @@
                   <Component id="btnNuevoProducto" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnActivarDesactivar" min="-2" pref="50" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="btnReporteVenta" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
@@ -215,6 +218,18 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActivarDesactivarActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnReporteVenta">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Poppins Medium" size="14" style="2"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Reporte Ventas"/>
+            <Property name="iconTextGap" type="int" value="6"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReporteVentaActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

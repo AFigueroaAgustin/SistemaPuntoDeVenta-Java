@@ -1,12 +1,18 @@
 package com.afigueroa.cajaregistradora2.logica;
 
-import Utilidades.FuncionesGui;
 import com.afigueroa.cajaregistradora2.persistencia.ControladoraPersis;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 
 public class ControLogica {
 
@@ -277,6 +283,37 @@ public class ControLogica {
         } else {
             // Opcional: Informa si no se encontró el producto
             System.out.println("No se encontró el producto con código: " + codigoProducto + " para activar.");
+        }
+    }
+
+    public JasperPrint generarReporteVentas() {
+        java.sql.Connection con = null;
+        try {
+            con = controlpersi.obtenerConexion();
+
+            if (con == null) {
+                System.err.println("Error: La ControladoraPersis no pudo obtener la conexión.");
+                return null;
+            }
+
+            // Buscar el archivo .jasper
+            InputStream reporteStream = getClass().getResourceAsStream("/reportes/ReporteVentas.jrxml");
+
+            if (reporteStream == null) {
+                System.err.println("No se encontró el archivo .jasper");
+                return null;
+            }
+            // Esto convierte el XML en un reporte real
+            JasperReport reporteCompilado = JasperCompileManager.compileReport(reporteStream);
+
+           Map<String, Object> parametros = new HashMap<>();  // se crea un map vacio
+
+            // Llenar el reporte
+            return JasperFillManager.fillReport(reporteCompilado, parametros, con);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

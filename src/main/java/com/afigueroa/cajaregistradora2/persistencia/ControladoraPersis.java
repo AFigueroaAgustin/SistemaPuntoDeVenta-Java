@@ -50,6 +50,8 @@ public class ControladoraPersis {
     public void guardarVenta(Venta nuevaVenta) {
         ventaJpa.create(nuevaVenta);
     }
-    
+    public java.sql.Connection obtenerConexion() {
+        return PersistenceManager.getConnection();
+    }
     
 }

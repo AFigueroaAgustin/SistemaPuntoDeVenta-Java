@@ -18,6 +18,8 @@ import javax.swing.table.DefaultTableModel;
 
 public final class FuncionesGui {
 
+
+
     private DefaultTableModel modeloProductos;
 
     private FuncionesGui() {
@@ -146,10 +148,12 @@ public final class FuncionesGui {
 
     public static void estilizarBotonAtras(JButton botonAtras) {
         // Usamos  porque el método es estático
-        botonAtras.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/arrow_back_.svg")));
+        botonAtras.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/arrow_back.svg")));
 
         // "roundRect" le da bordes completamente redondeados.
         botonAtras.putClientProperty("JButton.buttonType", "roundRect");
+        botonAtras.setOpaque(false);
+        botonAtras.setContentAreaFilled(false);
         botonAtras.setText(null);
     }
 
@@ -179,5 +183,13 @@ public final class FuncionesGui {
 
     public static void estilizarBotonCerrar(JButton botonCerrar) {
         botonCerrar.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/log-out.svg")));
+    }
+
+    public static void estilizarBotonReporteVentas(JButton ReporteVentas) {
+        ReporteVentas.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/ReporteVenta.svg")));
+        ReporteVentas.putClientProperty("JButton.buttonType", "roundRect");
+    }
+    public static void estilizarBotonActivarDesactivar(JButton botonActivarDesactivar){
+    botonActivarDesactivar.putClientProperty("JButton.buttonType", "roundRect");
     }
 }
