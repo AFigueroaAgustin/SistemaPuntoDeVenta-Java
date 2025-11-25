@@ -4,6 +4,7 @@ import com.afigueroa.cajaregistradora2.logica.DetalleVenta;
 import com.afigueroa.cajaregistradora2.logica.Producto;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,8 +18,6 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 public final class FuncionesGui {
-
-
 
     private DefaultTableModel modeloProductos;
 
@@ -146,7 +145,7 @@ public final class FuncionesGui {
 
     }
 
-    public static void estilizarBotonAtras(JButton botonAtras) {
+    /* public static void estilizarBotonAtras(JButton botonAtras) {
         // Usamos  porque el método es estático
         botonAtras.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/arrow_back.svg")));
 
@@ -191,5 +190,33 @@ public final class FuncionesGui {
     }
     public static void estilizarBotonActivarDesactivar(JButton botonActivarDesactivar){
     botonActivarDesactivar.putClientProperty("JButton.buttonType", "roundRect");
+    }*/
+    public static void estilizarBoton(JButton boton, String nombreIcono) {
+
+        // Cargamos el ícono 
+        if (nombreIcono != null && !nombreIcono.isEmpty()) {
+            boton.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/" + nombreIcono)));
+        }
+
+        boton.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Que aparezca la manito al pasar el mouse
+    }
+
+    // Sin icono
+    public static void estilizarBoton(JButton boton) {
+        boton.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Que aparezca la manito al pasar el mouse
+    }
+
+    // El botón Atrás por separado ya que tiene otro estilo
+    public static void estilizarBotonAtras(JButton botonAtras) {
+        botonAtras.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/arrow_back.svg")));
+
+        // Quitamos el fondo para que sea solo la flecha
+        botonAtras.setOpaque(false);
+        botonAtras.setContentAreaFilled(false);
+        botonAtras.setBorderPainted(false);
+        botonAtras.setText(null);
+
+        // Manito al pasar el mouse
+        botonAtras.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 }

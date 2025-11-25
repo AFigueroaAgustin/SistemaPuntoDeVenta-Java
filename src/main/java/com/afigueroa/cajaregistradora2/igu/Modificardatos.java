@@ -15,7 +15,7 @@ public class Modificardatos extends javax.swing.JFrame {
 
     public Modificardatos(ControladoraGui controlVentana, String codigoProducto) {
         initComponents();
-        FuncionesGui.estilizarBotonGuardar(btnGuardarProducto);
+        FuncionesGui.estilizarBoton(btnGuardarProducto,"save.svg");
         FuncionesGui.estilizarBotonAtras(btnAtras);
         this.controlVentana = controlVentana;
         this.codigoProducto = codigoProducto;
@@ -45,6 +45,8 @@ public class Modificardatos extends javax.swing.JFrame {
         btnAtras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(242, 245, 249));
 
         jLabel7.setFont(new java.awt.Font("Poppins Black", 1, 36)); // NOI18N
         jLabel7.setText("MODIFICAR DATOS DEL  PRODUCTO");

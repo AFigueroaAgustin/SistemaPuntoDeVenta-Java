@@ -165,6 +165,15 @@
             </Container>
             <Component class="javax.swing.JButton" name="btnAgregarProducto">
               <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="eb" green="e7" red="e5" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Poppins Medium" size="12" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="3b" green="29" red="1e" type="rgb"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Agregar"/>
               </Properties>
               <Events>
@@ -211,8 +220,14 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="btnCancelarCompra">
               <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="f2" green="f2" red="fe" type="rgb"/>
+                </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Poppins Medium" size="14" style="0"/>
+                  <Font name="Poppins Medium" size="14" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Cancelar Compra"/>
               </Properties>
@@ -222,8 +237,14 @@
             </Component>
             <Component class="javax.swing.JButton" name="bntEliminarProducto">
               <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="f2" green="f2" red="fe" type="rgb"/>
+                </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Poppins Medium" size="14" style="0"/>
+                  <Font name="Poppins Medium" size="14" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Eliminar Producto"/>
               </Properties>
@@ -233,8 +254,11 @@
             </Component>
             <Component class="javax.swing.JButton" name="bntFinalizarCompra">
               <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="eb" green="63" red="25" type="rgb"/>
+                </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Poppins Medium" size="14" style="0"/>
+                  <Font name="Poppins Medium" size="14" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Finalizar Compra"/>
               </Properties>

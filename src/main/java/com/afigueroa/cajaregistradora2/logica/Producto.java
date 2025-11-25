@@ -2,6 +2,7 @@ package com.afigueroa.cajaregistradora2.logica;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ public class Producto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column(unique = true) // Esto le dice a la BD que cree un índice rápido y evite duplicados
     private String codigo;
     private String nombre;
     private String descripcion;

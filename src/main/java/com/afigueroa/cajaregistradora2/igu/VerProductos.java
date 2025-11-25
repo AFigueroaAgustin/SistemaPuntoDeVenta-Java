@@ -18,11 +18,10 @@ public class VerProductos extends javax.swing.JFrame {
 
     public VerProductos(ControladoraGui control) {
         initComponents();
-        FuncionesGui.estilizarBotonEditar(btnEditar);
-        FuncionesGui.estilizarBotonNuevo(btnNuevoProducto);
+        FuncionesGui.estilizarBoton(btnEditar,"edit.svg");
+        FuncionesGui.estilizarBoton(btnNuevoProducto,"add.svg");
         FuncionesGui.estilizarBotonAtras(btnAtras);
-        FuncionesGui.estilizarBotonReporteVentas(btnReporteVenta);
-        FuncionesGui.estilizarBotonActivarDesactivar(btnActivarDesactivar);
+        FuncionesGui.estilizarBoton(btnReporteVenta,"ReporteVenta.svg");
         this.control = control;
         configurarListenerTabla(); // Llama al método para configurar el comportamiento de la tabla
     }
@@ -51,8 +50,9 @@ public class VerProductos extends javax.swing.JFrame {
             }
         });
 
+        jPanel1.setBackground(new java.awt.Color(242, 245, 249));
+
         btnEditar.setFont(new java.awt.Font("Poppins Medium", 2, 14)); // NOI18N
-        btnEditar.setIcon(new javax.swing.ImageIcon("E:\\DESCARGAS\\peluqueria canina\\editar.png")); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.setIconTextGap(6);
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -110,7 +110,6 @@ public class VerProductos extends javax.swing.JFrame {
         });
 
         btnNuevoProducto.setFont(new java.awt.Font("Poppins Medium", 2, 14)); // NOI18N
-        btnNuevoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/afigueroa/cajaregistradora2/igu/Icons/agregar-producto.png"))); // NOI18N
         btnNuevoProducto.setText("Nuevo");
         btnNuevoProducto.setIconTextGap(6);
         btnNuevoProducto.addActionListener(new java.awt.event.ActionListener() {
@@ -119,6 +118,8 @@ public class VerProductos extends javax.swing.JFrame {
             }
         });
 
+        chkMostrarInactivos.setFont(new java.awt.Font("Poppins Medium", 0, 12)); // NOI18N
+        chkMostrarInactivos.setForeground(new java.awt.Color(0, 15, 42));
         chkMostrarInactivos.setText("Mostrar Inactivos");
         chkMostrarInactivos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -241,22 +242,8 @@ public class VerProductos extends javax.swing.JFrame {
 
             // Determina qué lista de productos usar (completa o solo activos)
             // basándose en si el checkbox "Mostrar Inactivos" está marcado
-            List<Producto> listaActual;
-            if (chkMostrarInactivos.isSelected()) {
-                listaActual = controladoraLogica.traerTodosLosProductos(); //
-            } else {
-                listaActual = controladoraLogica.traerProductos(); // Ya filtrada por activos
-            }
-
+          Producto productoSeleccionado= controladoraLogica.traerProducto(codigoProducto);
             // Busca el objeto Producto completo en la lista correspondiente al código
-            Producto productoSeleccionado = null;
-            for (Producto p : listaActual) {
-                if (p.getCodigo().equals(codigoProducto)) { //
-                    productoSeleccionado = p;
-                    break; // Producto encontrado, salir del bucle
-                }
-            }
-
             // Si se encontró el producto
             if (productoSeleccionado != null) {
                 btnActivarDesactivar.setEnabled(true); // Habilita el botón

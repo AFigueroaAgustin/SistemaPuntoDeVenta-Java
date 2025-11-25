@@ -8,9 +8,9 @@ public class Principal extends javax.swing.JFrame {
     
     public Principal(ControladoraGui control) {
         initComponents();
-        FuncionesGui.estilizarBotonCerrar(btnCerrar);
-        FuncionesGui.estilizarBotonCatalogo(btnCatalogo);
-        FuncionesGui.estilizarBotonVenta(btnVenta);
+        FuncionesGui.estilizarBoton(btnCerrar,"log-out.svg");
+        FuncionesGui.estilizarBoton(btnCatalogo,"search.svg");
+        FuncionesGui.estilizarBoton(btnVenta,"shopping-cart.svg");
         this.control=control;
     }
     
@@ -27,13 +27,14 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(242, 245, 249));
+
         jLabel1.setFont(new java.awt.Font("Roboto Black", 2, 44)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("TIENDA LOS FIGUEROA");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnVenta.setBackground(null);
         btnVenta.setFont(new java.awt.Font("Poppins Medium", 0, 18)); // NOI18N
         btnVenta.setText("Venta");
         btnVenta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

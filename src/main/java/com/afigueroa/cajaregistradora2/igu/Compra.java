@@ -19,6 +19,11 @@ public class Compra extends javax.swing.JFrame {
     public Compra(ControladoraGui control) {
         initComponents();
         FuncionesGui.estilizarBotonAtras(btnAtras);
+        FuncionesGui.estilizarBoton(btnCancelarCompra);
+        FuncionesGui.estilizarBoton(btnAgregarProducto);
+        FuncionesGui.estilizarBoton(bntFinalizarCompra);
+        FuncionesGui.estilizarBoton(bntEliminarProducto);
+
         this.control = control;
     }
 
@@ -75,6 +80,9 @@ public class Compra extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tablaProductoSelec);
 
+        btnAgregarProducto.setBackground(new java.awt.Color(229, 231, 235));
+        btnAgregarProducto.setFont(new java.awt.Font("Poppins Medium", 1, 12)); // NOI18N
+        btnAgregarProducto.setForeground(new java.awt.Color(30, 41, 59));
         btnAgregarProducto.setText("Agregar");
         btnAgregarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,7 +120,9 @@ public class Compra extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnCancelarCompra.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
+        btnCancelarCompra.setBackground(new java.awt.Color(254, 242, 242));
+        btnCancelarCompra.setFont(new java.awt.Font("Poppins Medium", 1, 14)); // NOI18N
+        btnCancelarCompra.setForeground(new java.awt.Color(255, 0, 0));
         btnCancelarCompra.setText("Cancelar Compra");
         btnCancelarCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,7 +130,9 @@ public class Compra extends javax.swing.JFrame {
             }
         });
 
-        bntEliminarProducto.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
+        bntEliminarProducto.setBackground(new java.awt.Color(254, 242, 242));
+        bntEliminarProducto.setFont(new java.awt.Font("Poppins Medium", 1, 14)); // NOI18N
+        bntEliminarProducto.setForeground(new java.awt.Color(255, 0, 0));
         bntEliminarProducto.setText("Eliminar Producto");
         bntEliminarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,7 +140,8 @@ public class Compra extends javax.swing.JFrame {
             }
         });
 
-        bntFinalizarCompra.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
+        bntFinalizarCompra.setBackground(new java.awt.Color(37, 99, 235));
+        bntFinalizarCompra.setFont(new java.awt.Font("Poppins Medium", 1, 14)); // NOI18N
         bntFinalizarCompra.setText("Finalizar Compra");
         bntFinalizarCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

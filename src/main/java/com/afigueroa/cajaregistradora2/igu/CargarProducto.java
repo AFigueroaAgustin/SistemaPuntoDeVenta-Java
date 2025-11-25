@@ -13,7 +13,7 @@ public class CargarProducto extends javax.swing.JFrame {
     public CargarProducto(ControladoraGui control) {
         initComponents();
         FuncionesGui.estilizarBotonAtras(btnAtras);
-        FuncionesGui.estilizarBotonGuardar(btnGuardarProducto);
+        FuncionesGui.estilizarBoton(btnGuardarProducto,"save.svg");
         this.control = control;
     }
 
@@ -41,6 +41,7 @@ public class CargarProducto extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(242, 245, 249));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
         jLabel7.setFont(new java.awt.Font("Poppins Black", 1, 36)); // NOI18N
