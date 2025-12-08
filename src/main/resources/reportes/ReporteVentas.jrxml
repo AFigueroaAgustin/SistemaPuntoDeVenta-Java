@@ -2,68 +2,218 @@
 <jasperReport name="ReporteVentas" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2990c9f6-9372-4052-b2fb-240f3e9d8614">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="tienda los figueroa"/>
-	<query language="SQL"><![CDATA[SELECT * FROM venta LIMIT 10]]></query>
-	<field name="IDVENTA" class="java.lang.Integer">
+	<query language="SQL"><![CDATA[SELECT 
+    v.idVenta,
+    v.fechaVen,
+    v.metodoPago,
+    v.totalVenta,
+    p.nombre,
+    dv.cant,
+    dv.precioUnitarioVenta
+FROM Venta v
+INNER JOIN DetalleVenta dv ON v.idVenta = dv.idVenta
+INNER JOIN Producto p ON dv.idProducto = p.id]]></query>
+	<field name="idVenta" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="IDVENTA"/>
-		<property name="com.jaspersoft.studio.field.label" value="IDVENTA"/>
+		<property name="com.jaspersoft.studio.field.label" value="idVenta"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="venta"/>
 	</field>
-	<field name="FECHAVEN" class="java.time.LocalDateTime">
+	<field name="fechaVen" class="java.time.LocalDateTime">
 		<property name="com.jaspersoft.studio.field.name" value="FECHAVEN"/>
-		<property name="com.jaspersoft.studio.field.label" value="FECHAVEN"/>
+		<property name="com.jaspersoft.studio.field.label" value="fechaVen"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="venta"/>
 	</field>
-	<field name="METODOPAGO" class="java.lang.String">
+	<field name="metodoPago" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="METODOPAGO"/>
-		<property name="com.jaspersoft.studio.field.label" value="METODOPAGO"/>
+		<property name="com.jaspersoft.studio.field.label" value="metodoPago"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="venta"/>
 	</field>
-	<field name="TOTALVENTA" class="java.lang.Float">
+	<field name="totalVenta" class="java.lang.Float">
 		<property name="com.jaspersoft.studio.field.name" value="TOTALVENTA"/>
-		<property name="com.jaspersoft.studio.field.label" value="TOTALVENTA"/>
+		<property name="com.jaspersoft.studio.field.label" value="totalVenta"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="venta"/>
 	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMBRE"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="producto"/>
+	</field>
+	<field name="cant" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="CANT"/>
+		<property name="com.jaspersoft.studio.field.label" value="cant"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detalleventa"/>
+	</field>
+	<field name="precioUnitarioVenta" class="java.lang.Float">
+		<property name="com.jaspersoft.studio.field.name" value="PRECIOUNITARIOVENTA"/>
+		<property name="com.jaspersoft.studio.field.label" value="precioUnitarioVenta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detalleventa"/>
+	</field>
+	<variable name="SumaTotalVentas" calculation="Sum" class="java.lang.Float">
+		<expression><![CDATA[$F{totalVenta}]]></expression>
+		<initialValueExpression><![CDATA[0f]]></initialValueExpression>
+	</variable>
+	<group name="GrupoVenta">
+		<expression><![CDATA[$F{idVenta}]]></expression>
+		<groupHeader>
+			<band height="60">
+				<element kind="rectangle" uuid="83b45c2d-eb69-4262-82d3-32b611fc28b4" x="-20" y="0" width="595" height="60" backcolor="#F0F0F0">
+					<pen lineWidth="0.0"/>
+				</element>
+				<element kind="textField" uuid="73f7cff1-87d7-40ae-ba9f-528cf4cca37c" positionType="Float" stretchType="ElementGroupHeight" x="70" y="0" width="30" height="20" fontName="Roboto" fontSize="12.0" bold="false" hTextAlign="Left" vTextAlign="Middle">
+					<expression><![CDATA[$F{idVenta}]]></expression>
+					<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+					<property name="com.jaspersoft.studio.data.defaultdataadapter" value="tienda los figueroa"/>
+					<box>
+						<pen lineColor="#CCCCCC"/>
+						<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					</box>
+				</element>
+				<element kind="textField" uuid="1d8b23a1-3f1d-4e22-b7f0-f713af2abafe" positionType="Float" stretchType="ElementGroupHeight" x="240" y="0" width="106" height="20" fontName="Roboto" fontSize="12.0" pattern="dd/MM/yyyy HH:mm" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+					<expression><![CDATA[$F{fechaVen}.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))]]></expression>
+					<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+					<property name="com.jaspersoft.studio.data.defaultdataadapter" value="tienda los figueroa"/>
+					<box>
+						<pen lineColor="#CCCCCC"/>
+						<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="f546fa0d-0bb8-42a8-8cb7-9b6523b591f6" positionType="Float" stretchType="ElementGroupHeight" x="0" y="0" width="70" height="20" fontName="Roboto" fontSize="12.0" bold="true" hTextAlign="Left" vTextAlign="Middle">
+					<text><![CDATA[ID VENTA:]]></text>
+					<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+					<property name="com.jaspersoft.studio.data.defaultdataadapter" value="tienda los figueroa"/>
+					<box>
+						<pen lineWidth="0.25" lineStyle="Solid" lineColor="#CCCCCC"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="555cd343-f78f-4de3-bb57-2c0906a1947a" positionType="Float" stretchType="ElementGroupHeight" x="130" y="0" width="110" height="20" fontName="Roboto" fontSize="12.0" bold="true" vTextAlign="Middle">
+					<text><![CDATA[FECHA DE VENTA:]]></text>
+					<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+					<property name="com.jaspersoft.studio.data.defaultdataadapter" value="tienda los figueroa"/>
+					<box>
+						<pen lineWidth="0.25" lineStyle="Solid" lineColor="#CCCCCC"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="b8550f0d-19b0-4b6c-8502-b5e2a57af949" x="0" y="30" width="98" height="30" rotation="None" fontName="Roboto" fontSize="12.0" bold="true" hTextAlign="Left" vTextAlign="Middle">
+					<text><![CDATA[Nombre]]></text>
+					<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+					<property name="com.jaspersoft.studio.data.defaultdataadapter" value="tienda los figueroa"/>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+						<pen lineWidth="0.75" lineStyle="Solid" lineColor="#CCCCCC"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="dba7fe9f-ab22-4c02-b5ff-9fb72ea5d4de" x="220" y="30" width="60" height="30" fontName="Roboto" fontSize="12.0" bold="true" hTextAlign="Right" vTextAlign="Middle">
+					<text><![CDATA[Cantidad]]></text>
+					<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+					<property name="com.jaspersoft.studio.data.defaultdataadapter" value="tienda los figueroa"/>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+						<pen lineWidth="0.75" lineStyle="Solid" lineColor="#CCCCCC"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="d0e4c2a3-2e11-41f2-8382-ac3b58a215e0" x="433" y="30" width="122" height="30" fontName="Roboto" fontSize="12.0" bold="true" hTextAlign="Right" vTextAlign="Middle">
+					<text><![CDATA[Precio Uni. de venta]]></text>
+					<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+					<property name="com.jaspersoft.studio.data.defaultdataadapter" value="tienda los figueroa"/>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+						<pen lineWidth="0.75" lineStyle="Solid" lineColor="#CCCCCC"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+				</element>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="30">
+				<element kind="rectangle" uuid="491c02e0-5222-46df-9272-92f0d87115c2" x="-20" y="0" width="595" height="30" backcolor="#F0F0F0">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<pen lineWidth="0.0"/>
+				</element>
+				<element kind="textField" uuid="8152f253-c75a-4f48-8b06-917f53ad2af3" x="500" y="0" width="55" height="19" fontName="Roboto" fontSize="12.0" pattern="¤#,##0.##;¤-#,##0.##" hTextAlign="Right" vTextAlign="Middle">
+					<expression><![CDATA[$F{totalVenta}]]></expression>
+					<box>
+						<pen lineColor="#CCCCCC"/>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+				</element>
+				<element kind="staticText" uuid="c6e3bb6b-b305-421d-980c-1fa2405f016c" x="410" y="0" width="90" height="19" fontName="Roboto" fontSize="12.0" bold="true" vTextAlign="Middle">
+					<text><![CDATA[Total De Venta:]]></text>
+					<box>
+						<pen lineColor="#CCCCCC"/>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+				</element>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</band>
+		</groupFooter>
+	</group>
 	<background splitType="Stretch"/>
-	<title height="79" splitType="Stretch"/>
-	<pageHeader height="35" splitType="Stretch"/>
-	<columnHeader height="35" splitType="Stretch"/>
+	<title height="47" splitType="Stretch">
+		<element kind="staticText" uuid="5e151e16-d7dd-4a53-856a-a36c4f2529a1" x="0" y="0" width="260" height="47" fontName="Roboto" fontSize="24.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[TIENDA LOS FIGUEROA]]></text>
+			<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+			<property name="com.jaspersoft.studio.data.defaultdataadapter" value="tienda los figueroa"/>
+		</element>
+		<element kind="textField" uuid="e442c386-5d19-4147-a8e9-8bd96a96ec5c" x="443" y="1" width="112" height="46" fontName="Roboto" fontSize="12.0" pattern="M/d/yy h:mm a" italic="true" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA[new java.util.Date()]]></expression>
+			<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+			<property name="com.jaspersoft.studio.data.defaultdataadapter" value="tienda los figueroa"/>
+		</element>
+	</title>
+	<pageHeader height="30" splitType="Stretch">
+		<element kind="staticText" uuid="aa985531-8537-425c-afcf-fdf37059a673" x="190" y="2" width="180" height="26" fontName="Roboto" fontSize="22.0" italic="true" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Reporte de ventas]]></text>
+		</element>
+	</pageHeader>
+	<columnHeader splitType="Prevent">
+		<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</columnHeader>
 	<detail>
-		<band height="165" splitType="Stretch">
-			<element kind="textField" uuid="80cbbdcc-dc7f-4af1-a7ed-3eec0dbaae08" x="-1" y="60" width="141" height="30">
-				<expression><![CDATA[$F{IDVENTA}]]></expression>
-				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="78253360-7050-4bcf-aac6-96cb11e18581"/>
+		<band height="21" splitType="Stretch">
+			<element kind="rectangle" uuid="19096be8-5ea0-4cf5-a159-1324a0ce2407" x="-20" y="0" width="595" height="21" backcolor="#F0F0F0" radius="0">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<pen lineWidth="0.0"/>
 			</element>
-			<element kind="textField" uuid="17fabae3-b3d0-4fed-8f96-5d6f8bc5c17d" x="140" y="60" width="138" height="30">
-				<expression><![CDATA[$F{FECHAVEN}]]></expression>
-				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bc411792-56fc-444d-b489-edb2cacd7ad4"/>
+			<element kind="textField" uuid="ae6f6ddb-0108-4e93-b27e-3447a6820b3f" x="0" y="0" width="98" height="20" fontName="Roboto">
+				<expression><![CDATA[$F{nombre}]]></expression>
+				<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+				<property name="com.jaspersoft.studio.data.defaultdataadapter" value="tienda los figueroa"/>
 			</element>
-			<element kind="textField" uuid="e9712ec3-8d39-448b-8428-b89349ca8e41" x="281" y="60" width="138" height="30">
-				<expression><![CDATA[$F{METODOPAGO}]]></expression>
-				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ad3416f2-ace3-4a15-afa2-d584040df00e"/>
+			<element kind="textField" uuid="57c8cfe9-6248-435a-a328-c88c889dddc2" x="433" y="0" width="122" height="20" fontName="Roboto" pattern="¤#,##0.##;¤-#,##0.##" hTextAlign="Right" vTextAlign="Middle">
+				<expression><![CDATA[$F{precioUnitarioVenta}]]></expression>
+				<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+				<property name="com.jaspersoft.studio.data.defaultdataadapter" value="tienda los figueroa"/>
 			</element>
-			<element kind="textField" uuid="d81e84c2-40dc-4093-8f0e-a0c93059db23" x="419" y="60" width="130" height="30">
-				<expression><![CDATA[$F{TOTALVENTA}]]></expression>
-				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="068a77f4-901d-43d6-8a74-03c71938b3da"/>
+			<element kind="textField" uuid="f5fd1fec-b393-4dd1-a7d6-4d9d1eafe269" x="220" y="0" width="60" height="20" fontName="Roboto" hTextAlign="Right" vTextAlign="Middle">
+				<expression><![CDATA[$F{cant}]]></expression>
+				<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+				<property name="com.jaspersoft.studio.data.defaultdataadapter" value="tienda los figueroa"/>
 			</element>
-			<element kind="staticText" uuid="a1a037f1-6b93-40f0-b924-02ce6825785a" x="-1" y="20" width="141" height="30">
-				<text><![CDATA[IDVENTA]]></text>
-				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="78253360-7050-4bcf-aac6-96cb11e18581"/>
+			<element kind="line" uuid="8c2f6963-cd45-4591-9dea-db6e1a78b8ae" x="0" y="20" width="554" height="1">
+				<pen lineWidth="1.0" lineColor="#050000"/>
 			</element>
-			<element kind="staticText" uuid="4faaa365-fcbd-4ada-b894-c7dc4cde8f5c" x="140" y="20" width="138" height="30">
-				<text><![CDATA[FECHAVEN]]></text>
-				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bc411792-56fc-444d-b489-edb2cacd7ad4"/>
-			</element>
-			<element kind="staticText" uuid="d10ed7f0-4413-4980-9d48-bc7fbfd805be" x="278" y="20" width="138" height="30">
-				<text><![CDATA[METODOPAGO]]></text>
-				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ad3416f2-ace3-4a15-afa2-d584040df00e"/>
-			</element>
-			<element kind="staticText" uuid="27592ef9-0330-4ca6-8e9d-4b5e57b4e319" x="419" y="20" width="130" height="30">
-				<text><![CDATA[TOTALVENTA]]></text>
-				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="068a77f4-901d-43d6-8a74-03c71938b3da"/>
-			</element>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 		</band>
 	</detail>
 	<columnFooter height="45" splitType="Stretch"/>
 	<pageFooter height="54" splitType="Stretch"/>
-	<summary height="42" splitType="Stretch"/>
+	<summary height="48" splitType="Stretch"/>
 </jasperReport>

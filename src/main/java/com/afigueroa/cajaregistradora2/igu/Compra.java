@@ -23,6 +23,7 @@ public class Compra extends javax.swing.JFrame {
         FuncionesGui.estilizarBoton(btnAgregarProducto);
         FuncionesGui.estilizarBoton(bntFinalizarCompra);
         FuncionesGui.estilizarBoton(bntEliminarProducto);
+        FuncionesGui.estilizarBoton(btnCambiarCantidad);
 
         this.control = control;
     }
@@ -38,10 +39,12 @@ public class Compra extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaProductoSelec = new javax.swing.JTable();
         btnAgregarProducto = new javax.swing.JButton();
+        txtEscaner = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         btnCancelarCompra = new javax.swing.JButton();
         bntEliminarProducto = new javax.swing.JButton();
         bntFinalizarCompra = new javax.swing.JButton();
+        btnCambiarCantidad = new javax.swing.JButton();
         btnAtras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -90,6 +93,12 @@ public class Compra extends javax.swing.JFrame {
             }
         });
 
+        txtEscaner.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEscanerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -98,7 +107,9 @@ public class Compra extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAgregarProducto)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAgregarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtEscaner))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -114,7 +125,9 @@ public class Compra extends javax.swing.JFrame {
                             .addComponent(jScrollPane2)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(239, 239, 239)
-                        .addComponent(btnAgregarProducto)))
+                        .addComponent(btnAgregarProducto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtEscaner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -124,6 +137,7 @@ public class Compra extends javax.swing.JFrame {
         btnCancelarCompra.setFont(new java.awt.Font("Poppins Medium", 1, 14)); // NOI18N
         btnCancelarCompra.setForeground(new java.awt.Color(255, 0, 0));
         btnCancelarCompra.setText("Cancelar Compra");
+        btnCancelarCompra.setPreferredSize(new java.awt.Dimension(165, 33));
         btnCancelarCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarCompraActionPerformed(evt);
@@ -134,6 +148,7 @@ public class Compra extends javax.swing.JFrame {
         bntEliminarProducto.setFont(new java.awt.Font("Poppins Medium", 1, 14)); // NOI18N
         bntEliminarProducto.setForeground(new java.awt.Color(255, 0, 0));
         bntEliminarProducto.setText("Eliminar Producto");
+        bntEliminarProducto.setPreferredSize(new java.awt.Dimension(165, 33));
         bntEliminarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bntEliminarProductoActionPerformed(evt);
@@ -143,9 +158,23 @@ public class Compra extends javax.swing.JFrame {
         bntFinalizarCompra.setBackground(new java.awt.Color(37, 99, 235));
         bntFinalizarCompra.setFont(new java.awt.Font("Poppins Medium", 1, 14)); // NOI18N
         bntFinalizarCompra.setText("Finalizar Compra");
+        bntFinalizarCompra.setPreferredSize(new java.awt.Dimension(165, 33));
         bntFinalizarCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bntFinalizarCompraActionPerformed(evt);
+            }
+        });
+
+        btnCambiarCantidad.setBackground(new java.awt.Color(254, 242, 242));
+        btnCambiarCantidad.setFont(new java.awt.Font("Poppins Medium", 1, 14)); // NOI18N
+        btnCambiarCantidad.setForeground(new java.awt.Color(0, 0, 0));
+        btnCambiarCantidad.setText("Cambiar Cantidad");
+        btnCambiarCantidad.setMaximumSize(new java.awt.Dimension(165, 33));
+        btnCambiarCantidad.setMinimumSize(new java.awt.Dimension(165, 33));
+        btnCambiarCantidad.setPreferredSize(new java.awt.Dimension(165, 33));
+        btnCambiarCantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCambiarCantidadActionPerformed(evt);
             }
         });
 
@@ -158,9 +187,11 @@ public class Compra extends javax.swing.JFrame {
                 .addComponent(btnCancelarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(97, 97, 97)
                 .addComponent(bntEliminarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(91, 91, 91)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCambiarCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(92, 92, 92)
                 .addComponent(bntFinalizarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(32, 32, 32))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,8 +200,9 @@ public class Compra extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bntEliminarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bntFinalizarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(48, Short.MAX_VALUE))
+                    .addComponent(bntFinalizarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCambiarCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/afigueroa/cajaregistradora2/igu/Icons/flecha-hacia-atras.png"))); // NOI18N
@@ -235,6 +267,7 @@ public class Compra extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         cargartablaProducto();
         cargarTablaCarrito();
+        txtEscaner.requestFocus(); // Se enfoca el cursor en el espacio donde va el codigo
     }//GEN-LAST:event_formWindowOpened
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
@@ -257,10 +290,10 @@ public class Compra extends javax.swing.JFrame {
                     FuncionesGui.mostrarMensaje("Producto agregado al carrito.", "Éxito", "Información");
                 } else {
                     // Aquí el método falló por: producto no encontrado, stock insuficiente, o cantidad <= 0
-                    FuncionesGui.mostrarMensaje("Error al agregar. Verifique el stock o el código del producto.", "Advertencia", "Error");
+                    FuncionesGui.mostrarMensaje("No se pudo cambiar: Stock insuficiente o cantidad inválida.", "Advertencia", "Error");
                 }
             } catch (NumberFormatException e) {
-                FuncionesGui.mostrarMensaje("Ingrese una cantidad válida.", "Error", "Error de entrada");
+                FuncionesGui.mostrarMensaje("Ingrese una cantidad válida.(Solo nuemeros)", "Error", "Error de entrada");
             }
         } else {
             FuncionesGui.mostrarMensaje("Seleccione un producto para agregar.", "Advertencia", "Error");
@@ -289,11 +322,11 @@ public class Compra extends javax.swing.JFrame {
     }//GEN-LAST:event_bntFinalizarCompraActionPerformed
 
     private void bntEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntEliminarProductoActionPerformed
-        String codigoProducto=FuncionesGui.getCodigoFilaSelecionada(tablaProductoSelec);
-        if (codigoProducto==null){
+        String codigoProducto = FuncionesGui.getCodigoFilaSelecionada(tablaProductoSelec);
+        if (codigoProducto == null) {
             FuncionesGui.mostrarMensaje("Debe Seleccionar un Producto", "Error", "Error");
         } else {
-            
+
             // Llamo al metodo
             controladoraLogica.borrarProductoDelCarrito(codigoProducto);
             // Aviso al usuario
@@ -301,6 +334,47 @@ public class Compra extends javax.swing.JFrame {
             cargarTablaCarrito();
         }
     }//GEN-LAST:event_bntEliminarProductoActionPerformed
+
+    private void txtEscanerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEscanerActionPerformed
+        String codigoBarras = txtEscaner.getText();
+        //String sCantidad = FuncionesGui.mostrarMensajeInput("Ingrese la cantidad a agregar", "Nueva Compra");
+        try {
+            //int cantidad = Integer.parseInt(sCantidad);
+            boolean agregadoExitoso = controladoraLogica.agregarProductoAcarrito(codigoBarras, 1);
+
+            if (agregadoExitoso) {
+                cargarTablaCarrito(); // Solo actualiza si fue exitoso
+                txtEscaner.setText("");
+                txtEscaner.requestFocus();
+                FuncionesGui.mostrarMensaje("Producto agregado al carrito.", "Éxito", "Información");
+            } else {
+                // Aquí el método falló por: producto no encontrado, stock insuficiente, o cantidad <= 0
+                FuncionesGui.mostrarMensaje("Error al agregar. Verifique el stock o el código del producto.", "Advertencia", "Error");
+            }
+        } catch (NumberFormatException e) {
+            FuncionesGui.mostrarMensaje("Ingrese una cantidad válida.", "Error", "Error de entrada");
+        }
+
+    }//GEN-LAST:event_txtEscanerActionPerformed
+
+    private void btnCambiarCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarCantidadActionPerformed
+        String codigoProducto = FuncionesGui.getCodigoFilaSelecionada(tablaProductoSelec);
+        if (codigoProducto != null) {
+            try {
+                String sCantidad = FuncionesGui.mostrarMensajeInput("Ingrese la cantidad exacta", "Cambio de Cantidad");
+                int cantidad = Integer.parseInt(sCantidad);
+                boolean cambioExitoso=controladoraLogica.cambiarCantidadProducto(codigoProducto, cantidad);
+                if (!cambioExitoso) {
+                     FuncionesGui.mostrarMensaje("Error al agregar. Verifique el stock o el código del producto.", "Advertencia", "Error");
+                }
+                cargarTablaCarrito();
+            } catch (NumberFormatException e) {
+                FuncionesGui.mostrarMensaje("Ingrese una cantidad válida.", "Error", "Error de entrada");
+            }
+        } else {
+            FuncionesGui.mostrarMensaje("Debe Seleccionar un Producto", "Error", "Error");
+        }
+    }//GEN-LAST:event_btnCambiarCantidadActionPerformed
 
     private void cargartablaProducto() {
         List<Producto> inventario = controladoraLogica.traerProductos();
@@ -319,6 +393,7 @@ public class Compra extends javax.swing.JFrame {
     private javax.swing.JButton bntFinalizarCompra;
     private javax.swing.JButton btnAgregarProducto;
     private javax.swing.JButton btnAtras;
+    private javax.swing.JButton btnCambiarCantidad;
     private javax.swing.JButton btnCancelarCompra;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -327,6 +402,7 @@ public class Compra extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tablaProducto2;
     private javax.swing.JTable tablaProductoSelec;
+    private javax.swing.JTextField txtEscaner;
     // End of variables declaration//GEN-END:variables
 
 }

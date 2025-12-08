@@ -13,7 +13,7 @@ public class CargarProducto extends javax.swing.JFrame {
     public CargarProducto(ControladoraGui control) {
         initComponents();
         FuncionesGui.estilizarBotonAtras(btnAtras);
-        FuncionesGui.estilizarBoton(btnGuardarProducto,"save.svg");
+        FuncionesGui.estilizarBoton(btnGuardarProducto, "save.svg");
         this.control = control;
     }
 
@@ -40,6 +40,11 @@ public class CargarProducto extends javax.swing.JFrame {
         btnAtras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(242, 245, 249));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
@@ -166,7 +171,7 @@ public class CargarProducto extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addGap(44, 44, 44)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -199,7 +204,7 @@ public class CargarProducto extends javax.swing.JFrame {
         String precioVentaStr = txtPrecioVenta.getText();
         String errorMensaje = controladoraLogica.validarDatos(codigo, nombre, cantidadStr, descrip, precioCostoStr, precioVentaStr);
 
-        if (errorMensaje == null) {
+        if (errorMensaje != null) {
             FuncionesGui.mostrarMensaje(errorMensaje, "Error", "Error");
         } else {
             guardarDatos();
@@ -208,6 +213,10 @@ public class CargarProducto extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnGuardarProductoActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        txtCodigo.requestFocus();
+    }//GEN-LAST:event_formWindowOpened
 
     private void guardarDatos() {
         controladoraLogica.cargarProducto(

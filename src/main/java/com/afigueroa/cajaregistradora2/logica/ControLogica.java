@@ -75,7 +75,7 @@ public class ControLogica {
             return false;
         }
 
-        //(Solo si las validaciones pasaron
+        //Solo si las validaciones pasaron
         if (cantidadYaCarrito > 0) {
             // ACTUALIZAR Detalle Existente
             detalleExistente.setCant(cantidadTotal);
@@ -89,6 +89,30 @@ public class ControLogica {
         }
 
         return true; // Exito
+    }
+
+    public boolean cambiarCantidadProducto(String codigoProducto, int NuevaCant) {
+
+        Producto produc = controlpersi.traerProductoPorCodigo(codigoProducto);
+
+        //  Si no existe o la cantidad es inválida.
+        if (produc == null || NuevaCant <= 0) {
+            return false;
+        }
+        DetalleVenta detalleExistente = buscarDetalleVentaExistente(codigoProducto);
+        if (detalleExistente == null) {
+            return false;
+        } else { // Si la cantidad total supera el stock disponible.
+            if (NuevaCant > produc.getStockActual()) {
+                return false;
+            }
+        }
+        //Solo si las validaciones pasaron
+        // Atualiza la cantidad del Detalle Existente
+        detalleExistente.setCant(NuevaCant);
+
+        return true; // Exito
+
     }
 
     public float calcularTotalVenta() {
@@ -162,7 +186,6 @@ public class ControLogica {
         if (txtDescrip.trim().isEmpty()) {
             return "La 'descripción' no puede estar vacio.";
         }
-        System.out.println("Validando Precio Venta: '" + txtPrecioVenta + "'"); // Añade esto
         try {
             Float precio = Float.parseFloat(txtPrecioVenta);
             if (precio <= 0) {
@@ -306,7 +329,7 @@ public class ControLogica {
             // Esto convierte el XML en un reporte real
             JasperReport reporteCompilado = JasperCompileManager.compileReport(reporteStream);
 
-           Map<String, Object> parametros = new HashMap<>();  // se crea un map vacio
+            Map<String, Object> parametros = new HashMap<>();  // se crea un map vacio
 
             // Llenar el reporte
             return JasperFillManager.fillReport(reporteCompilado, parametros, con);
