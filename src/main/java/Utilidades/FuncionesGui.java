@@ -145,65 +145,20 @@ public final class FuncionesGui {
 
     }
 
-    /* public static void estilizarBotonAtras(JButton botonAtras) {
-        // Usamos  porque el método es estático
-        botonAtras.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/arrow_back.svg")));
-
-        // "roundRect" le da bordes completamente redondeados.
-        botonAtras.putClientProperty("JButton.buttonType", "roundRect");
-        botonAtras.setOpaque(false);
-        botonAtras.setContentAreaFilled(false);
-        botonAtras.setText(null);
-    }
-
-    public static void estilizarBotonGuardar(JButton botonGuardar) {
-        // Carga el ícono SVG de guardar
-        botonGuardar.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/save.svg")));
-        botonGuardar.putClientProperty("JButton.buttonType", "roundRect");
-    }
-
-    public static void estilizarBotonEditar(JButton botonEditar) {
-        botonEditar.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/edit.svg")));
-        botonEditar.putClientProperty("JButton.buttonType", "roundRect");
-    }
-
-    public static void estilizarBotonNuevo(JButton botonNuevo) {
-        botonNuevo.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/add.svg")));
-        botonNuevo.putClientProperty("JButton.buttonType", "roundRect");
-    }
-
-    public static void estilizarBotonVenta(JButton botonVenta) {
-        botonVenta.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/shopping-cart.svg")));
-    }
-
-    public static void estilizarBotonCatalogo(JButton botonCatalogo) {
-        botonCatalogo.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/search.svg")));
-    }
-
-    public static void estilizarBotonCerrar(JButton botonCerrar) {
-        botonCerrar.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/log-out.svg")));
-    }
-
-    public static void estilizarBotonReporteVentas(JButton ReporteVentas) {
-        ReporteVentas.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/ReporteVenta.svg")));
-        ReporteVentas.putClientProperty("JButton.buttonType", "roundRect");
-    }
-    public static void estilizarBotonActivarDesactivar(JButton botonActivarDesactivar){
-    botonActivarDesactivar.putClientProperty("JButton.buttonType", "roundRect");
-    }*/
     public static void estilizarBoton(JButton boton, String nombreIcono) {
 
         // Cargamos el ícono 
         if (nombreIcono != null && !nombreIcono.isEmpty()) {
             boton.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/" + nombreIcono)));
         }
-
+        boton.putClientProperty("JButton.buttonType", "roundRect");
         boton.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Que aparezca la manito al pasar el mouse
     }
 
     // Sin icono
     public static void estilizarBoton(JButton boton) {
         boton.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Que aparezca la manito al pasar el mouse
+        boton.putClientProperty("JButton.buttonType", "roundRect");
     }
 
     // El botón Atrás por separado ya que tiene otro estilo
@@ -211,10 +166,9 @@ public final class FuncionesGui {
         botonAtras.setIcon(new FlatSVGIcon(FuncionesGui.class.getResource("/com/afigueroa/cajaregistradora2/igu/Icons/arrow_back.svg")));
 
         // Quitamos el fondo para que sea solo la flecha
-        botonAtras.setOpaque(false);
         botonAtras.setContentAreaFilled(false);
         botonAtras.setBorderPainted(false);
-        botonAtras.setText(null);
+        botonAtras.setOpaque(false);
 
         // Manito al pasar el mouse
         botonAtras.setCursor(new Cursor(Cursor.HAND_CURSOR));
