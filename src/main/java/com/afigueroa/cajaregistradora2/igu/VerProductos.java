@@ -3,45 +3,45 @@ package com.afigueroa.cajaregistradora2.igu;
 import Utilidades.FuncionesGui;
 import com.afigueroa.cajaregistradora2.logica.ControLogica;
 import com.afigueroa.cajaregistradora2.logica.Producto;
+import com.afigueroa.cajaregistradora2.logica.Sesion;
+import com.afigueroa.cajaregistradora2.logica.Usuario;
 import java.util.List;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JasperViewer;
 
 public class VerProductos extends javax.swing.JFrame {
 
-    private ControladoraGui control;
-
+    private final ControladoraGui control;
     ControLogica controladoraLogica = new ControLogica();
+    Usuario usuarioActual = Sesion.getUsuarioLogueado();
 
     public VerProductos(ControladoraGui control) {
         initComponents();
-        FuncionesGui.estilizarBoton(btnEditar,"edit.svg");
-        FuncionesGui.estilizarBoton(btnNuevoProducto,"add.svg");
-        FuncionesGui.estilizarBotonAtras(btnAtras);
-        FuncionesGui.estilizarBoton(btnReporteVenta,"ReporteVenta.svg");
         this.control = control;
+        esterelizarBotones();
         configurarListenerTabla(); // Llama al método para configurar el comportamiento de la tabla
+        aplicarRestriccionesRol(usuarioActual);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        jPanel1 = new javax.swing.JPanel();
+        pnlGeneral = new javax.swing.JPanel();
+        pnlCuerpo = new javax.swing.JPanel();
+        pnlBotones = new javax.swing.JPanel();
+        btnNuevoProducto = new javax.swing.JButton();
+        chkMostrarInactivos = new javax.swing.JCheckBox();
         btnEditar = new javax.swing.JButton();
+        btnActivarDesactivar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaProducto = new javax.swing.JTable();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lblProductos = new javax.swing.JLabel();
+        pnlAtras = new javax.swing.JPanel();
         btnAtras = new javax.swing.JButton();
-        btnNuevoProducto = new javax.swing.JButton();
-        chkMostrarInactivos = new javax.swing.JCheckBox();
-        btnActivarDesactivar = new javax.swing.JButton();
-        btnReporteVenta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -50,7 +50,47 @@ public class VerProductos extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(242, 245, 249));
+        pnlGeneral.setBackground(new java.awt.Color(242, 245, 249));
+        pnlGeneral.setLayout(new java.awt.BorderLayout());
+
+        pnlCuerpo.setLayout(new java.awt.BorderLayout());
+
+        pnlBotones.setLayout(new java.awt.GridBagLayout());
+
+        btnNuevoProducto.setFont(new java.awt.Font("Poppins Medium", 2, 14)); // NOI18N
+        btnNuevoProducto.setText("Nuevo");
+        btnNuevoProducto.setIconTextGap(6);
+        btnNuevoProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoProductoActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 71;
+        gridBagConstraints.ipady = 17;
+        gridBagConstraints.insets = new java.awt.Insets(10, 6, 10, 6);
+        pnlBotones.add(btnNuevoProducto, gridBagConstraints);
+
+        chkMostrarInactivos.setFont(new java.awt.Font("Poppins Medium", 0, 12)); // NOI18N
+        chkMostrarInactivos.setForeground(new java.awt.Color(0, 15, 42));
+        chkMostrarInactivos.setText("Mostrar Inactivos");
+        chkMostrarInactivos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        chkMostrarInactivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkMostrarInactivosActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 21;
+        gridBagConstraints.ipady = 27;
+        gridBagConstraints.insets = new java.awt.Insets(10, 6, 10, 6);
+        pnlBotones.add(chkMostrarInactivos, gridBagConstraints);
 
         btnEditar.setFont(new java.awt.Font("Poppins Medium", 2, 14)); // NOI18N
         btnEditar.setText("Editar");
@@ -60,9 +100,39 @@ public class VerProductos extends javax.swing.JFrame {
                 btnEditarActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 74;
+        gridBagConstraints.ipady = 17;
+        gridBagConstraints.insets = new java.awt.Insets(10, 6, 10, 6);
+        pnlBotones.add(btnEditar, gridBagConstraints);
+
+        btnActivarDesactivar.setText("Activar/Desactivar");
+        btnActivarDesactivar.setEnabled(false);
+        btnActivarDesactivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActivarDesactivarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 20;
+        gridBagConstraints.ipady = 23;
+        gridBagConstraints.insets = new java.awt.Insets(10, 6, 10, 6);
+        pnlBotones.add(btnActivarDesactivar, gridBagConstraints);
+
+        pnlCuerpo.add(pnlBotones, java.awt.BorderLayout.EAST);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel4.setLayout(new java.awt.BorderLayout());
 
+        jScrollPane3.setPreferredSize(new java.awt.Dimension(600, 400));
+
+        tablaProducto.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
         tablaProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -76,31 +146,15 @@ public class VerProductos extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(tablaProducto);
 
-        jLabel4.setFont(new java.awt.Font("Poppins Medium", 2, 14)); // NOI18N
-        jLabel4.setText("Productos");
+        jPanel4.add(jScrollPane3, java.awt.BorderLayout.CENTER);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        lblProductos.setFont(new java.awt.Font("Poppins Medium", 2, 24)); // NOI18N
+        lblProductos.setText("Productos");
+        jPanel4.add(lblProductos, java.awt.BorderLayout.PAGE_START);
+
+        pnlCuerpo.add(jPanel4, java.awt.BorderLayout.CENTER);
+
+        pnlGeneral.add(pnlCuerpo, java.awt.BorderLayout.CENTER);
 
         btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/afigueroa/cajaregistradora2/igu/Icons/flecha-hacia-atras.png"))); // NOI18N
         btnAtras.addActionListener(new java.awt.event.ActionListener() {
@@ -109,97 +163,34 @@ public class VerProductos extends javax.swing.JFrame {
             }
         });
 
-        btnNuevoProducto.setFont(new java.awt.Font("Poppins Medium", 2, 14)); // NOI18N
-        btnNuevoProducto.setText("Nuevo");
-        btnNuevoProducto.setIconTextGap(6);
-        btnNuevoProducto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoProductoActionPerformed(evt);
-            }
-        });
-
-        chkMostrarInactivos.setFont(new java.awt.Font("Poppins Medium", 0, 12)); // NOI18N
-        chkMostrarInactivos.setForeground(new java.awt.Color(0, 15, 42));
-        chkMostrarInactivos.setText("Mostrar Inactivos");
-        chkMostrarInactivos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chkMostrarInactivosActionPerformed(evt);
-            }
-        });
-
-        btnActivarDesactivar.setText("Activar/Desactivar");
-        btnActivarDesactivar.setEnabled(false);
-        btnActivarDesactivar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActivarDesactivarActionPerformed(evt);
-            }
-        });
-
-        btnReporteVenta.setFont(new java.awt.Font("Poppins Medium", 2, 14)); // NOI18N
-        btnReporteVenta.setText("Reporte Ventas");
-        btnReporteVenta.setIconTextGap(6);
-        btnReporteVenta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReporteVentaActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                            .addComponent(btnNuevoProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                            .addComponent(chkMostrarInactivos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnActivarDesactivar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnReporteVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(404, 404, 404)
-                        .addComponent(jLabel1)))
-                .addContainerGap(139, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel1)
-                .addGap(313, 313, 313)
-                .addComponent(chkMostrarInactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnNuevoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnActivarDesactivar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnReporteVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlAtrasLayout = new javax.swing.GroupLayout(pnlAtras);
+        pnlAtras.setLayout(pnlAtrasLayout);
+        pnlAtrasLayout.setHorizontalGroup(
+            pnlAtrasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAtrasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81))
+                .addContainerGap())
         );
+        pnlAtrasLayout.setVerticalGroup(
+            pnlAtrasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAtrasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        pnlGeneral.add(pnlAtras, java.awt.BorderLayout.PAGE_START);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -242,7 +233,7 @@ public class VerProductos extends javax.swing.JFrame {
 
             // Determina qué lista de productos usar (completa o solo activos)
             // basándose en si el checkbox "Mostrar Inactivos" está marcado
-          Producto productoSeleccionado= controladoraLogica.traerProducto(codigoProducto);
+            Producto productoSeleccionado = controladoraLogica.traerProducto(codigoProducto);
             // Busca el objeto Producto completo en la lista correspondiente al código
             // Si se encontró el producto
             if (productoSeleccionado != null) {
@@ -287,7 +278,13 @@ public class VerProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
-        control.mostrarPrincipal();
+        if (usuarioActual.getRol().getNombreRol().equalsIgnoreCase("admin")) {
+            System.out.println("ENtro");
+            control.mostrarAdmin();
+        }else{
+            control.mostrarPrincipal();
+        }
+
     }//GEN-LAST:event_btnAtrasActionPerformed
 
     private void btnNuevoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoProductoActionPerformed
@@ -330,32 +327,34 @@ public class VerProductos extends javax.swing.JFrame {
         cargarTabla(); // Recarga la tabla con el filtro correspondiente
     }//GEN-LAST:event_chkMostrarInactivosActionPerformed
 
-    private void btnReporteVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteVentaActionPerformed
-        // PEDIR EL REPORTE A LA LÓGICA
-        JasperPrint reporte = controladoraLogica.generarReporteVentas();
+    private void aplicarRestriccionesRol(Usuario usuario) {
 
-        if (reporte != null) {
-            JasperViewer visor = new JasperViewer(reporte, false); // "false" No cerrar la app al salir
-            visor.setTitle("Reporte General de Ventas");
-            visor.setVisible(true);
-        } else {
-            Utilidades.FuncionesGui.mostrarMensaje("No se pudo generar el reporte. Revise la conexión o el archivo.", "Error", "Error al Generar");
+        if (usuario != null && usuario.getRol().getNombreRol().equalsIgnoreCase("cajero")) {
+
+            // Ocultamos los botones de gestión
+            pnlBotones.setVisible(false);
         }
-    }//GEN-LAST:event_btnReporteVentaActionPerformed
+    }
 
+    private void esterelizarBotones() {
+        FuncionesGui.estilizarBoton(btnEditar, "edit.svg");
+        FuncionesGui.estilizarBoton(btnNuevoProducto, "add.svg");
+        FuncionesGui.estilizarBotonAtras(btnAtras);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActivarDesactivar;
     private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnNuevoProducto;
-    private javax.swing.JButton btnReporteVenta;
     private javax.swing.JCheckBox chkMostrarInactivos;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblProductos;
+    private javax.swing.JPanel pnlAtras;
+    private javax.swing.JPanel pnlBotones;
+    private javax.swing.JPanel pnlCuerpo;
+    private javax.swing.JPanel pnlGeneral;
     private javax.swing.JTable tablaProducto;
     // End of variables declaration//GEN-END:variables
 
@@ -371,7 +370,8 @@ public class VerProductos extends javax.swing.JFrame {
                     .count(); // Cuenta cuántos son
 
             if (cantidadInactivos == 0) {
-                FuncionesGui.mostrarMensaje("No hay productos inactivos para mostrar.", "Info", "Información"); //
+                FuncionesGui.mostrarMensaje("No hay productos inactivos para mostrar.", "Info", "Información");
+                chkMostrarInactivos.setSelected(false);
             }
         } else {
             // Si no está marcado, trae solo los ACTIVOS 

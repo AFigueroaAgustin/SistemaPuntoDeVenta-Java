@@ -20,6 +20,7 @@ public class ControLogica {
     List<DetalleVenta> carritoActual = new ArrayList<>();
     Producto productoAmodificar;
 
+    //-------------------------- Producto --------------------------
     public Producto traerProducto(String codigoproducto) {
         Producto producto = controlpersi.traerProductoPorCodigo(codigoproducto);
         return producto;
@@ -115,6 +116,64 @@ public class ControLogica {
 
     }
 
+    public boolean borrarProductoDelCarrito(String codigoProducto) {
+        DetalleVenta productoAEliminar = null;
+        for (DetalleVenta detalle : carritoActual) {
+            Producto producto = detalle.getProducto();
+            if (producto.getCodigo().equals(codigoProducto)) {
+                productoAEliminar = detalle;
+                break;
+            }
+        }
+        if (productoAEliminar == null) {
+            return false;
+        } else {
+            carritoActual.remove(productoAEliminar);
+            return true;
+        }
+    }
+
+    public void desactivarProducto(String codigoProducto) {
+        // Busca el producto en la base de datos usando el código
+        Producto productoADesactivar = controlpersi.traerProductoPorCodigo(codigoProducto); //
+        // Verifica si se encontró el producto
+        if (productoADesactivar != null) {
+            // Establece el estado a inactivo
+            productoADesactivar.setActivo(false); //
+            try {
+                // Llama al método de persistencia para guardar los cambios
+                controlpersi.modificarProducto(productoADesactivar); //
+            } catch (Exception e) {
+                // Registra un error si la modificación falla
+                Logger.getLogger(ControLogica.class.getName()).log(Level.SEVERE, "Error al intentar desactivar el producto: " + codigoProducto, e);
+            }
+        } else {
+            // Opcional: Informa si no se encontró el producto
+            System.out.println("No se encontró el producto con código: " + codigoProducto + " para desactivar.");
+        }
+    }
+
+    public void activarProducto(String codigoProducto) {
+        // Busca el producto en la base de datos usando el código
+        Producto productoAActivar = controlpersi.traerProductoPorCodigo(codigoProducto); //
+        // Verifica si se encontró el producto
+        if (productoAActivar != null) {
+            // Establece el estado a activo
+            productoAActivar.setActivo(true); //
+            try {
+                // Llama al método de persistencia para guardar los cambios
+                controlpersi.modificarProducto(productoAActivar); //
+            } catch (Exception e) {
+                // Registra un error si la modificación falla
+                Logger.getLogger(ControLogica.class.getName()).log(Level.SEVERE, "Error al intentar activar el producto: " + codigoProducto, e);
+            }
+        } else {
+            // Opcional: Informa si no se encontró el producto
+            System.out.println("No se encontró el producto con código: " + codigoProducto + " para activar.");
+        }
+    }
+
+    // -------------------------- Venta --------------------------
     public float calcularTotalVenta() {
         float total = 0;
 
@@ -252,63 +311,6 @@ public class ControLogica {
 
     }
 
-    public boolean borrarProductoDelCarrito(String codigoProducto) {
-        DetalleVenta productoAEliminar = null;
-        for (DetalleVenta detalle : carritoActual) {
-            Producto producto = detalle.getProducto();
-            if (producto.getCodigo().equals(codigoProducto)) {
-                productoAEliminar = detalle;
-                break;
-            }
-        }
-        if (productoAEliminar == null) {
-            return false;
-        } else {
-            carritoActual.remove(productoAEliminar);
-            return true;
-        }
-    }
-
-    public void desactivarProducto(String codigoProducto) {
-        // Busca el producto en la base de datos usando el código
-        Producto productoADesactivar = controlpersi.traerProductoPorCodigo(codigoProducto); //
-        // Verifica si se encontró el producto
-        if (productoADesactivar != null) {
-            // Establece el estado a inactivo
-            productoADesactivar.setActivo(false); //
-            try {
-                // Llama al método de persistencia para guardar los cambios
-                controlpersi.modificarProducto(productoADesactivar); //
-            } catch (Exception e) {
-                // Registra un error si la modificación falla
-                Logger.getLogger(ControLogica.class.getName()).log(Level.SEVERE, "Error al intentar desactivar el producto: " + codigoProducto, e);
-            }
-        } else {
-            // Opcional: Informa si no se encontró el producto
-            System.out.println("No se encontró el producto con código: " + codigoProducto + " para desactivar.");
-        }
-    }
-
-    public void activarProducto(String codigoProducto) {
-        // Busca el producto en la base de datos usando el código
-        Producto productoAActivar = controlpersi.traerProductoPorCodigo(codigoProducto); //
-        // Verifica si se encontró el producto
-        if (productoAActivar != null) {
-            // Establece el estado a activo
-            productoAActivar.setActivo(true); //
-            try {
-                // Llama al método de persistencia para guardar los cambios
-                controlpersi.modificarProducto(productoAActivar); //
-            } catch (Exception e) {
-                // Registra un error si la modificación falla
-                Logger.getLogger(ControLogica.class.getName()).log(Level.SEVERE, "Error al intentar activar el producto: " + codigoProducto, e);
-            }
-        } else {
-            // Opcional: Informa si no se encontró el producto
-            System.out.println("No se encontró el producto con código: " + codigoProducto + " para activar.");
-        }
-    }
-
     public JasperPrint generarReporteVentas() {
         java.sql.Connection con = null;
         try {
@@ -339,4 +341,83 @@ public class ControLogica {
             return null;
         }
     }
+
+    // -------------------------- Login --------------------------
+    public Usuario verificarLogin(String nombreUsuario, String contrasenia) throws Exception {
+        Usuario usu = controlpersi.buscarUsuario(nombreUsuario);
+
+        if (usu != null) {
+            if (usu.getContraseña().equals(contrasenia)) {
+                return usu;
+            }
+
+        }
+        return null;
+    }
+
+    public Usuario validarRol(Usuario usr) {
+        if (usr.getRol().getNombreRol().equals("admin")) {
+            return usr;
+        }
+        if (usr.getRol().getNombreRol().equals("cajero")) {
+            return usr;
+        }
+        return null;
+    }
+
+    public List<Usuario> traerUsuarios() {
+        return controlpersi.traerUsuarios();
+    }
+
+    public List<Rol> traerRoles() {
+        return controlpersi.traerRoles();
+    }
+
+    public Boolean validarExistente(String nombre) {
+        Usuario usr = controlpersi.buscarUsuario(nombre);
+        if (usr != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public void crearUsuario(Rol idselecionado, String nombre, String contra) {
+        Usuario usr = new Usuario();
+        usr.setRol(idselecionado);
+        usr.setNombreUsuario(nombre);
+        usr.setContraseña(contra);
+        controlpersi.crearUsuario(usr);
+    }
+
+    public void borrarUsuario(long idUsuario) {
+        controlpersi.borrarUsuario(idUsuario);
+    }
+
+    public Usuario traerUsuario(long idUsuario) {
+        Usuario usr = controlpersi.traerUsuario(idUsuario);
+        return usr;
+    }
+
+    public Boolean verificarDatosUsr(long idUsuarioEditando, String nombreNuevo) {
+
+        Usuario usuarioConEseNombre = controlpersi.buscarUsuario(nombreNuevo);
+
+        if (usuarioConEseNombre != null) {
+
+            if (usuarioConEseNombre.getId() != idUsuarioEditando) {
+                return false; // ERROR: El nombre ya existe y es de otro.
+            }
+        }
+
+        return true;
+    }
+
+    public void guardarDatosUsr(long idUsuario, String nombreAct, String contraAct, Rol idselec) {
+        Usuario usr = traerUsuario(idUsuario);
+        usr.setNombreUsuario(nombreAct);
+        usr.setContraseña(contraAct);
+        usr.setRol(idselec);
+        controlpersi.guardarDatosUsr(usr);
+    }
+
 }

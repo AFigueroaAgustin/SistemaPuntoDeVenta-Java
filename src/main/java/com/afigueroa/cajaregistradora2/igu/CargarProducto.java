@@ -2,19 +2,21 @@ package com.afigueroa.cajaregistradora2.igu;
 
 import Utilidades.FuncionesGui;
 import com.afigueroa.cajaregistradora2.logica.ControLogica;
-import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.afigueroa.cajaregistradora2.logica.Usuario;
+
 
 public class CargarProducto extends javax.swing.JFrame {
 
-    private ControladoraGui control;
+    private final ControladoraGui control;
 
-    private ControLogica controladoraLogica = new ControLogica();
+    private final ControLogica controladoraLogica = new ControLogica();
 
     public CargarProducto(ControladoraGui control) {
         initComponents();
         FuncionesGui.estilizarBotonAtras(btnAtras);
         FuncionesGui.estilizarBoton(btnGuardarProducto, "save.svg");
         this.control = control;
+
     }
 
     @SuppressWarnings("unchecked")
@@ -49,7 +51,7 @@ public class CargarProducto extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(242, 245, 249));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        jLabel7.setFont(new java.awt.Font("Poppins Black", 1, 36)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Roboto Black", 2, 36)); // NOI18N
         jLabel7.setText("CARGAR NUEVO PRODUCTO");
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
@@ -171,7 +173,7 @@ public class CargarProducto extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addGap(44, 44, 44)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -191,7 +193,6 @@ public class CargarProducto extends javax.swing.JFrame {
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
 
         control.mostrarProductos();
-        this.dispose();
 
     }//GEN-LAST:event_btnAtrasActionPerformed
 

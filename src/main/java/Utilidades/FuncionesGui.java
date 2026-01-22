@@ -2,10 +2,12 @@ package Utilidades;
 
 import com.afigueroa.cajaregistradora2.logica.DetalleVenta;
 import com.afigueroa.cajaregistradora2.logica.Producto;
+import com.afigueroa.cajaregistradora2.logica.Usuario;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -64,8 +66,42 @@ public final class FuncionesGui {
         return modelo;
     }
 
+    public static DefaultTableModel crearModeloUsuarios(List<Usuario> listaUsr) {
+        DefaultTableModel modelo = new DefaultTableModel() {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+
+        };
+        String[] columnas = {"ID", "Nombre", "Rol", "ID_ROL"};
+        modelo.setColumnIdentifiers(columnas);
+
+        if (listaUsr != null) {
+            for (Usuario u : listaUsr) {
+                if (u.getRol().getNombreRol().equals("cajero")) {
+                    Object[] fila = {
+                        u.getId(),
+                        u.getNombreUsuario(),
+                        u.getRol().getNombreRol(),
+                        u.getRol().getId()
+                    };
+                    modelo.addRow(fila);
+                }
+
+            }
+        }
+        return modelo;
+    }
+
     public static void cargarTablaProductos(JTable tabla, List<Producto> lista) {
         DefaultTableModel modelo = crearModeloProductos(lista);
+        tabla.setModel(modelo);
+    }
+
+    public static void cargarTablaUsuario(JTable tabla, List<Usuario> listaUsr) {
+        DefaultTableModel modelo = crearModeloUsuarios(listaUsr);
         tabla.setModel(modelo);
     }
 
@@ -99,7 +135,11 @@ public final class FuncionesGui {
                 ((JTextArea) comp).setText("");
             } // Limpia combo boxes
             else if (comp instanceof JComboBox) {
-                ((JComboBox<?>) comp).setSelectedIndex(0);
+                JComboBox<?> combo = (JComboBox<?>) comp;
+                // Solo intentamos seleccionar el primero si existen items
+                if (combo.getItemCount() > 0) {
+                    combo.setSelectedIndex(0);
+                }
             } // Limpia spinners
             else if (comp instanceof JSpinner) {
                 ((JSpinner) comp).setValue(0);
@@ -143,6 +183,18 @@ public final class FuncionesGui {
 
         tabla.setModel(modelo);
 
+    }
+
+    public static void cargarCombo(JComboBox combo, List<?> listaDatos) {
+        DefaultComboBoxModel model = (DefaultComboBoxModel) combo.getModel();
+
+        model.removeAllElements();
+
+        if (listaDatos != null) {
+            for (Object obj : listaDatos) {
+                model.addElement(obj);
+            }
+        }
     }
 
     public static void estilizarBoton(JButton boton, String nombreIcono) {
