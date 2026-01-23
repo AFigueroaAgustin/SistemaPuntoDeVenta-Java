@@ -1,66 +1,80 @@
-# Sistema de Punto de Venta (POS) - Tienda Los Figueroa
+# Sistema de Punto de Venta (POS) - Tienda Los Figueroa v2.0 🛒
 
 ## Descripción
 
-Este proyecto es una aplicación de escritorio desarrollada en Java Swing que simula un sistema de Punto de Venta (POS) básico para una tienda. Permite gestionar un inventario de productos y registrar ventas. Fue desarrollado como un proyecto personal para aplicar y demostrar conocimientos en Java, JPA y arquitectura de software.
+Aplicación de escritorio robusta desarrollada en **Java Swing** para la gestión profesional de ventas e inventario. 
+
+Esta versión **2.0** representa una evolución completa del sistema, incorporando una arquitectura segura con **autenticación de usuarios**, gestión de **roles (Administrador/Vendedor)** y generación de **reportes de ventas**. Fue desarrollado para demostrar el dominio de Java, JPA, patrones de diseño y librerías de terceros.
+
+## Novedades de la Versión 2.0 🚀
+
+* 🔒 **Seguridad y Login:** Sistema de autenticación que valida credenciales contra la base de datos.
+* 👥 **Roles de Usuario:**
+    * **Administrador:** Acceso total (ABM de usuarios, productos y reportes).
+    * **Vendedor:** Acceso restringido (solo realizar ventas).
+* 📊 **Reportes Avanzados:** Integración con **JasperReports** para generar comprobantes y listados de ventas.
+* 🎨 **Interfaz Moderna:** Diseño renovado utilizando **FlatLaf** para una experiencia de usuario más limpia y profesional.
 
 ## Funcionalidades Principales ✨
 
-* **Gestión de Inventario:**
-    * **Crear:** Añadir nuevos productos al sistema (Código, Nombre, Cantidad, Descripción, Precio Costo, Precio Venta).
-    * **Visualizar:** Ver la lista de productos existentes.
-    * **Modificar:** Editar la información de un producto existente.
-    * **Activar/Desactivar:** Marcar productos como inactivos (borrado lógico) sin eliminarlos de la base de datos, preservando el historial.
-* **Proceso de Venta:**
-    * Iniciar una nueva venta.
-    * Agregar productos del inventario al carrito de compras, validando el stock disponible.
-    * Eliminar productos del carrito.
-    * Cancelar la venta actual (vaciar carrito).
-    * Finalizar la venta, registrando el método de pago y el total. El stock de los productos vendidos se actualiza automáticamente.
-* **Arquitectura:**
-    * Implementa un patrón de **3 capas** (Presentación IGU, Lógica de Negocio, Persistencia de Datos) para una mejor organización y mantenibilidad.
-    * Uso de **JPA (EclipseLink)** para el mapeo objeto-relacional y la interacción con la base de datos.
-    * **Configuración Externalizada:** Las credenciales de la base de datos se manejan en un archivo `db.properties` externo (no incluido en el repositorio por seguridad) y se cargan mediante un `PersistenceManager`.
+### 🛡️ Gestión de Seguridad
+* **Login:** Control de acceso al inicio del sistema.
+* **Gestión de Usuarios:** El administrador puede crear, editar y asignar roles a nuevos empleados.
 
-## Tecnologías Utilizadas 🛠️
+### 📦 Gestión de Inventario
+* **CRUD Completo:** Crear, leer, actualizar y "borrado lógico" de productos.
+* **Control de Stock:** Visualización clara de precios y cantidades disponibles.
 
-* **Lenguaje:** Java (JDK 17 o superior)
-* **Interfaz Gráfica:** Java Swing
-* **Persistencia:** JPA 2.2 (con implementación EclipseLink 2.7.10)
-* **Base de Datos:** MySQL (requiere conector 8.0.30 o compatible)
-* **Build Tool:** Maven
+### 💰 Proceso de Venta
+* **Carrito de Compras:** Búsqueda dinámica de productos y validación de stock en tiempo real.
+* **Cálculo Automático:** Suma de totales y gestión del carrito.
+* **Registro de Venta:** Al finalizar, se descuenta el stock automáticamente y se guarda el registro histórico.
+
+### 📈 Reportes
+* Visualización de historial de ventas.
+* Exportación y generación de documentos de venta.
+
+## Arquitectura y Tecnologías 🛠️
+
+El proyecto sigue un patrón de **arquitectura en capas** (IGU, Lógica, Persistencia) para garantizar la escalabilidad.
+
+* **Lenguaje:** Java (JDK 17+)
+* **Interfaz Gráfica:** Java Swing + FlatLaf (Look and Feel)
+* **Persistencia:** JPA 2.2 (EclipseLink)
+* **Base de Datos:** MySQL 8.0+
+* **Reportes:** JasperReports
+* **Gestión de Dependencias:** Maven
 
 ## Configuración ⚙️
 
 1.  **Base de Datos:**
-    * Asegúrate de tener un servidor MySQL en ejecución.
-    * Crea una base de datos (por ejemplo, llamada `tiendo los figueroa`). JPA creará las tablas automáticamente (`update` en `persistence.xml`).
+    * Asegúrate de tener MySQL corriendo.
+    * Crea la base de datos (ej. `tienda_los_figueroa`). JPA creará las tablas automáticamente (`Usuario`, `Rol`, `Producto`, `Venta`, etc.).
+    * **IMPORTANTE (Primer uso):** Debes insertar manualmente los roles en tu base de datos antes de crear el primer usuario:
+        ```sql
+        INSERT INTO rol (id, nombreRol, descripcion) VALUES (1, 'admin', 'Acceso Total');
+        INSERT INTO rol (id, nombreRol, descripcion) VALUES (2, 'vendedor', 'Ventas');
+        ```
+
 2.  **Archivo de Propiedades:**
-    * Navega a la carpeta `src/main/resources/`.
-    * Copia el archivo `db.properties.example.properties` y renómbralo a `db.properties`.
-    * Edita `db.properties` y reemplaza los placeholders (`TU_SERVIDOR`, `TU_PUERTO`, `TU_BASE_DE_DATOS`, `TU_USUARIO`, `TU_CONTRASEÑA`) con tus credenciales reales de MySQL. **¡IMPORTANTE: No subas este archivo `db.properties` a Git!** Está incluido en `.gitignore`.
+    * Ve a `src/main/resources/`.
+    * Renombra `db.properties.example.properties` a `db.properties`.
+    * Configura tus credenciales reales (Usuario/Pass de MySQL).
 
 ## Ejecución ▶️
 
-Tienes dos formas de ejecutar la aplicación:
-
 ### Opción 1: Instalador de Windows (Recomendado)
+1.  Ve a la sección de **Releases** de este repositorio.
+2.  Descarga el instalador de la versión más reciente (**v2.0.0**).
+3.  Instala y ejecuta. (Incluye todo lo necesario para correr sin configuraciones extra).
 
-1.  Ve a la sección de [**Releases**](https://github.com/AFigueroaAgustin/SistemaPuntoDeVenta-Java/releases) del repositorio.
-2.  Descarga el archivo `.exe` de la última versión (ej. `Tienda.Los.Figueroa-1.0.1.exe`).
-3.  Ejecuta el instalador. Esto instalará la aplicación en tu computadora (incluyendo el Java necesario) y creará accesos directos.
-
-### Opción 2: Desde el código fuente (Para desarrolladores)
-
-1.  Abre el proyecto en tu IDE preferido (NetBeans, IntelliJ IDEA, Eclipse).
-2.  Asegúrate de que las dependencias de Maven se hayan descargado correctamente.
+### Opción 2: Para Desarrolladores
+1.  Clona el repositorio.
+2.  Abre el proyecto con Maven en NetBeans/IntelliJ.
 3.  Ejecuta la clase principal: `com.afigueroa.cajaregistradora2.Cajaregistradora2`.
 
-## Posibles Mejoras Futuras 🚀
-
-* Implementar un sistema de **Login** para seguridad.
-* Añadir un módulo de **Reportes** (historial de ventas, totales diarios, etc.).
-* Añadir **pruebas unitarias**.
-
+## Estado del Proyecto
+✅ **Versión Actual:** v2.0.0 (Estable con Seguridad y Reportes).
+📅 **Versión Anterior:** [v1.0.1](https://github.com/AFigueroaAgustin/SistemaPuntoDeVenta-Java/releases/tag/v1.0.1-final) (Versión básica legacy).
 
 ---
